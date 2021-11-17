@@ -1,0 +1,17 @@
+---
+- name: Add tailscale apt key.
+  apt_key:
+    url: "{{ tailscale_apt_key }}"
+    state: present
+  ignore_errors: "{{ tailscale_apt_ignore_key_error }}"
+
+- name: Add tailscale repository.
+  apt_repository:
+    repo: "{{ tailscale_apt_repository }}"
+    state: present
+    update_cache: true
+
+- name: Install tailscale.
+  apt:
+    name: tailscale
+    state: present
