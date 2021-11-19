@@ -34,7 +34,7 @@ None.
         tailscale_apt_release_stage: "stable"
 
       roles:
-        - jason-riddle.tailscale
+        - jason_riddle.tailscale
 
 ## License
 
