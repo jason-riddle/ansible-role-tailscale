@@ -67,5 +67,7 @@ jobs:
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
+          ANSIBLE_STDOUT_CALLBACK: 'yaml'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
