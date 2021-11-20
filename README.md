@@ -49,6 +49,7 @@ None.
 
       vars:
         tailscale_apt_release_stage: "stable"
+        tailscale_authorize_key: "tskey-abcdef1234567890"
 
       roles:
         - jason_riddle.tailscale
