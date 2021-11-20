@@ -22,6 +22,23 @@ The release stage to use for downloading. There are two release stages, `stable`
 
 Apt repository options for tailscale installation.
 
+    tailscaled_daemon_state: started
+    tailscaled_daemon_enabled: true
+
+Configure the state of the tailscaled deamon.
+
+    tailscale_authorize_daemon: true
+
+Run the authorize command.
+
+    tailscale_authorize_key: "tskey-abcdef1234567890"
+
+Use the following key when authorizing.
+
+    tailscale_authorize_timeout: 10
+
+Timeout to wait for the authorize command to complete.
+
 ## Dependencies
 
 None.
@@ -32,6 +49,7 @@ None.
 
       vars:
         tailscale_apt_release_stage: "stable"
+        tailscale_authorize_key: "tskey-abcdef1234567890"
 
       roles:
         - jason_riddle.tailscale

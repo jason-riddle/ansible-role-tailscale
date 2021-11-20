@@ -15,3 +15,12 @@
   apt:
     name: tailscale
     state: present
+
+- name: Ensure tailscaled is running as desired.
+  service:
+    name: tailscaled
+    state: "{{ tailscaled_daemon_state }}"
+    enabled: "{{ tailscaled_daemon_enabled }}"
+
+- include_tasks: authorize.yml
+  when: tailscale_authorize_daemon

@@ -1,0 +1,14 @@
+---
+- name: Assert tailscale_authorize_key is not empty.
+  assert:
+    that:
+      - tailscale_authorize_key | length > 0
+    quiet: true
+
+- name: Run the authorize command.
+  become: true
+  command: "tailscale up --authkey {{ tailscale_authorize_key }}"
+  async: "{{ tailscale_authorize_timeout }}"
+  poll: 1
+  tags:
+    - molecule-idempotence-notest

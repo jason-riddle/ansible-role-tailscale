@@ -3,6 +3,9 @@
   hosts: all
   become: true
 
+  vars:
+    tailscale_authorize_key: "{{ lookup('env', 'TAILSCALE_AUTHORIZE_KEY') }}"
+
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600

@@ -3,3 +3,10 @@ tailscale_apt_release_stage: "stable"
 tailscale_apt_key: "https://pkgs.tailscale.com/{{ tailscale_apt_release_stage }}/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.gpg"
 tailscale_apt_repository: "deb https://pkgs.tailscale.com/{{ tailscale_apt_release_stage }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 tailscale_apt_ignore_key_error: false
+
+tailscaled_daemon_state: started
+tailscaled_daemon_enabled: true
+
+tailscale_authorize_daemon: true
+tailscale_authorize_key: "tskey-abcdef1234567890"
+tailscale_authorize_timeout: 10
