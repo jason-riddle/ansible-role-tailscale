@@ -7,7 +7,9 @@
 
 - name: Run the authorize command.
   become: true
-  command: "tailscale up --authkey {{ tailscale_authorize_key }}"
+  command: "tailscale up --authkey=file:/dev/stdin"
+  args:
+    stdin: "{{ tailscale_authorize_key }}"
   async: "{{ tailscale_authorize_timeout }}"
   poll: 1
   tags:
