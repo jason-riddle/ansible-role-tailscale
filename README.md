@@ -27,9 +27,9 @@ Apt repository options for tailscale installation.
 
 Configure the state of the tailscale deamon.
 
-    tailscale_skip_up: false
+    tailscale_run_up_command: false
 
-Skip running tailscale up.
+Run the up command.
 
     tailscale_up_auth_key: ""
 
@@ -52,6 +52,7 @@ None.
     - hosts: all
 
       vars:
+        tailscale_run_up_command: true
         tailscale_up_auth_key: "tskey-abcdef1234567890"
         tailscale_up_args:
           - --advertise-tags=tag:server,tag:staging

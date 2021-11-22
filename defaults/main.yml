@@ -7,7 +7,7 @@ tailscale_apt_ignore_key_error: false
 tailscale_daemon_state: started
 tailscale_daemon_enabled: true
 
-tailscale_skip_up: false
+tailscale_run_up_command: false
 tailscale_up_auth_key: ""
 tailscale_up_command_timeout: 10
 tailscale_up_args: []
