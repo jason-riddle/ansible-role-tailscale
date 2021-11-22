@@ -31,9 +31,11 @@ Configure the state of the tailscale deamon.
 
 Run the up command.
 
-    tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
+    tailscale_up_auth_key: null
 
-Use the env var TAILSCALE_AUTH_KEY to read the auth key.
+The auth key to use for the up command. Set to a string (not recommended),
+ansible fact, dynamic lookup, or reference an environment variable ex.
+`"{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"`.
 
     tailscale_up_command_timeout: 10
 

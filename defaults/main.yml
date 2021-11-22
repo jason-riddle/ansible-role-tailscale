@@ -8,6 +8,6 @@ tailscale_daemon_state: started
 tailscale_daemon_enabled: true
 
 tailscale_run_up_command: false
-tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
+tailscale_up_auth_key: null
 tailscale_up_command_timeout: 10
 tailscale_up_args: []
