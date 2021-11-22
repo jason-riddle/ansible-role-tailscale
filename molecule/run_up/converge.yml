@@ -5,7 +5,7 @@
 
   vars:
     tailscale_run_up_command: true
-    tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTHORIZE_KEY') }}"
+    tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
 
   pre_tasks:
     - name: Update apt cache.

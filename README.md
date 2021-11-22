@@ -31,9 +31,9 @@ Configure the state of the tailscale deamon.
 
 Run the up command.
 
-    tailscale_up_auth_key: ""
+    tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
 
-Use the following key when authorizing.
+Use the env var TAILSCALE_AUTH_KEY to read the auth key.
 
     tailscale_up_command_timeout: 10
 
@@ -53,7 +53,7 @@ None.
 
       vars:
         tailscale_run_up_command: true
-        tailscale_up_auth_key: "tskey-abcdef1234567890"
+        tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
         tailscale_up_args:
           - --advertise-tags=tag:server,tag:staging
 
