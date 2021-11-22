@@ -22,6 +22,8 @@
     state: "{{ tailscale_daemon_state }}"
     enabled: "{{ tailscale_daemon_enabled }}"
 
+# The reason to read the auth key from stdin is to avoid leaking the key in
+# the logs. If ANSIBLE_DEBUG=1, then stdin is logged along with the auth key.
 - name: Connect to the network with tailscale up.
   become: true
   command: |
