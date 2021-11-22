@@ -63,7 +63,7 @@ jobs:
 
       - name: Run Molecule tests.
         run: |
-          TAILSCALE_AUTHORIZE_KEY=${{ secrets.TAILSCALE_AUTHORIZE_KEY }} molecule test
+          TAILSCALE_AUTHORIZE_KEY=${{ secrets.TAILSCALE_AUTHORIZE_KEY }} molecule test --all
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
