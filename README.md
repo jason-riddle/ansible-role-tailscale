@@ -12,9 +12,9 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    tailscale_apt_release_stage: stable
+    tailscale_apt_release_stability: stable
 
-The release stage to use for downloading. There are two release stages, `stable` or `unstable`.
+The release stability to use. There are two options, `stable` or `unstable`.
 
     tailscale_apt_key: "https://pkgs.tailscale.com/{{ tailscale_apt_release_stage }}/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.gpg"
     tailscale_apt_repository: "deb https://pkgs.tailscale.com/{{ tailscale_apt_release_stage }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
@@ -22,22 +22,26 @@ The release stage to use for downloading. There are two release stages, `stable`
 
 Apt repository options for tailscale installation.
 
-    tailscaled_daemon_state: started
-    tailscaled_daemon_enabled: true
+    tailscale_daemon_state: started
+    tailscale_daemon_enabled: true
 
-Configure the state of the tailscaled deamon.
+Configure the state of the tailscale deamon.
 
-    tailscale_authorize_daemon: true
+    tailscale_skip_up: false
 
-Run the authorize command.
+Skip running tailscale up.
 
-    tailscale_authorize_key: "tskey-abcdef1234567890"
+    tailscale_up_auth_key: ""
 
 Use the following key when authorizing.
 
-    tailscale_authorize_timeout: 10
+    tailscale_up_command_timeout: 10
 
-Timeout to wait for the authorize command to complete.
+Timeout to wait for the up command to complete.
+
+    tailscale_up_args: []
+
+A list of additional args to pass to the up command. See https://tailscale.com/kb/1080/cli/#up.
 
 ## Dependencies
 
@@ -48,8 +52,9 @@ None.
     - hosts: all
 
       vars:
-        tailscale_apt_release_stage: "stable"
-        tailscale_authorize_key: "tskey-abcdef1234567890"
+        tailscale_up_auth_key: "tskey-abcdef1234567890"
+        tailscale_up_args:
+          - --advertise-tags=tag:server,tag:staging
 
       roles:
         - jason_riddle.tailscale

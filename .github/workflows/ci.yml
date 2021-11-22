@@ -69,5 +69,6 @@ jobs:
           ANSIBLE_FORCE_COLOR: '1'
           ANSIBLE_LOAD_CALLBACK_PLUGINS: true
           ANSIBLE_STDOUT_CALLBACK: 'yaml'
+          ANSIBLE_VERBOSITY: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
