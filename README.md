@@ -27,13 +27,15 @@ Apt repository options for tailscale installation.
 
 Configure the state of the tailscale deamon.
 
-    tailscale_skip_up: false
+    tailscale_run_up_command: false
 
-Skip running tailscale up.
+Run the up command.
 
-    tailscale_up_auth_key: ""
+    tailscale_up_auth_key: null
 
-Use the following key when authorizing.
+The auth key to use for the up command. Set to a string (not recommended),
+ansible fact, dynamic lookup, or reference an environment variable ex.
+`"{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"`.
 
     tailscale_up_command_timeout: 10
 
@@ -52,7 +54,8 @@ None.
     - hosts: all
 
       vars:
-        tailscale_up_auth_key: "tskey-abcdef1234567890"
+        tailscale_run_up_command: true
+        tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
         tailscale_up_args:
           - --advertise-tags=tag:server,tag:staging
 

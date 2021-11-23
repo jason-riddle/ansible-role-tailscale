@@ -4,7 +4,10 @@
   become: true
 
   vars:
-    tailscale_run_up_command: false
+    tailscale_run_up_command: true
+    tailscale_up_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
+    tailscale_up_args:
+      - "--hostname=github-run-{{ lookup('env', 'GITHUB_RUN_NUMBER') }}-{{ ansible_distribution|lower }}"
 
   pre_tasks:
     - name: Update apt cache.
