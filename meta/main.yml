@@ -5,7 +5,7 @@ galaxy_info:
   role_name: tailscale
   author: jason_riddle
   description: "Tailscale for Linux."
-  issue_tracker_url: https://github.com/jason-riddle/ansible-misc/issues
+  issue_tracker_url: https://github.com/jason-riddle/ansible-role-tailscale/issues
   license: "MIT"
   min_ansible_version: 2.4
   platforms:
