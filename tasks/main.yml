@@ -9,7 +9,6 @@
   apt_repository:
     repo: "{{ tailscale_apt_repository }}"
     state: present
-    update_cache: true
 
 - name: Install tailscale.
   apt:
