@@ -1,7 +1,0 @@
----
-- name: Verify
-  hosts: all
-
-  tasks:
-    - name: Verify hello.ipn.dev is reachable.
-      shell: tailscale status | grep -q hello
