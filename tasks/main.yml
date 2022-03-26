@@ -18,10 +18,10 @@
 - name: Create the default config file.
   copy:
     content: "{{ tailscale_config_contents }}"
-    dest:  "/etc/default/tailscaled"
-    user:  "root"
+    dest: "/etc/default/tailscaled"
+    user: "root"
     group: "root"
-    mode:  "0644"
+    mode: "0644"
   notify:
     - restart tailscaled
 
