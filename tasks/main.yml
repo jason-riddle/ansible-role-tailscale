@@ -22,6 +22,8 @@
     user:  "root"
     group: "root"
     mode:  "0644"
+  notify:
+    - restart tailscaled
 
 - name: Ensure tailscaled is running as desired.
   service:
