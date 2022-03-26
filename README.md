@@ -22,10 +22,10 @@ The release stability to use. There are two options, `stable` or `unstable`.
 
 Apt repository options for tailscale installation.
 
-    tailscale_daemon_state: started
-    tailscale_daemon_enabled: true
+    tailscale_service_state: started
+    tailscale_service_enabled: true
 
-Configure the state of the tailscale deamon.
+Configure the state of the tailscale service.
 
     tailscale_run_up_command: false
 

@@ -4,8 +4,8 @@ tailscale_apt_key: "https://pkgs.tailscale.com/{{ tailscale_apt_release_stabilit
 tailscale_apt_repository: "deb https://pkgs.tailscale.com/{{ tailscale_apt_release_stability }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 tailscale_apt_ignore_key_error: false
 
-tailscale_daemon_state: started
-tailscale_daemon_enabled: true
+tailscale_service_state: started
+tailscale_service_enabled: true
 
 tailscale_run_up_command: false
 tailscale_up_auth_key: null
