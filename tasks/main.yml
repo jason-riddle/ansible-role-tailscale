@@ -18,8 +18,8 @@
 - name: Ensure tailscaled is running as desired.
   service:
     name: tailscaled
-    state: "{{ tailscale_daemon_state }}"
-    enabled: "{{ tailscale_daemon_enabled }}"
+    state: "{{ tailscale_service_state }}"
+    enabled: "{{ tailscale_service_enabled }}"
 
 - include_tasks: run_up.yml
   when: tailscale_run_up_command | bool
