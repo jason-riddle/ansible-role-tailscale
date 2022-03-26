@@ -45,6 +45,18 @@ Timeout to wait for the up command to complete.
 
 A list of additional args to pass to the up command. See https://tailscale.com/kb/1080/cli/#up.
 
+    tailscale_config_contents: |
+      # Set the port to listen on for incoming VPN packets.
+      # Remote nodes will automatically be informed about the new port number,
+      # but you might want to configure this in order to set external firewall
+      # settings.
+      PORT="41641"
+
+      # Extra flags you might want to pass to tailscaled.
+      FLAGS=""
+
+The configuration for /etc/default/tailscale.
+
 ## Dependencies
 
 None.

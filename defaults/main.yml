@@ -11,3 +11,13 @@ tailscale_run_up_command: false
 tailscale_up_auth_key: null
 tailscale_up_command_timeout: 10
 tailscale_up_args: []
+
+tailscale_config_contents: |
+  # Set the port to listen on for incoming VPN packets.
+  # Remote nodes will automatically be informed about the new port number,
+  # but you might want to configure this in order to set external firewall
+  # settings.
+  PORT="41641"
+
+  # Extra flags you might want to pass to tailscaled.
+  FLAGS=""

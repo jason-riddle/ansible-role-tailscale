@@ -15,6 +15,16 @@
     name: tailscale
     state: present
 
+- name: Create the default config file.
+  copy:
+    content: "{{ tailscale_config_contents }}"
+    dest: "/etc/default/tailscaled"
+    user: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - restart tailscaled
+
 - name: Ensure tailscaled is running as desired.
   service:
     name: tailscaled
