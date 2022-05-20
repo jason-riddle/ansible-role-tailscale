@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: debian10
+          - distro: debian10 # Buster
             playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
