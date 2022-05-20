@@ -1,3 +1,0 @@
----
-- name: restart tailscaled
-  service: name=tailscaled state=restarted
