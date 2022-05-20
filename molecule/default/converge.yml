@@ -9,10 +9,6 @@
       changed_when: false
       when: ansible_os_family == 'Debian'
 
-    - name: Install gnupg (Debian).
-      apt: name=gnupg state=present
-      when: ansible_os_family == 'Debian'
-
   roles:
     - role: jason_riddle.tailscale
 

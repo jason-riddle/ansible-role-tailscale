@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: debian10
+          - distro: debian10 # Buster
             playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
@@ -63,7 +63,7 @@ jobs:
 
       - name: Run Molecule tests.
         run: |
-          TAILSCALE_AUTH_KEY=${{ secrets.TAILSCALE_AUTH_KEY }} molecule test --all
+          molecule test --all
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
