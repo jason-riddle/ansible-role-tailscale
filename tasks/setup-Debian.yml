@@ -11,12 +11,12 @@
     state: present
   when: ansible_distribution == 'Ubuntu' or ansible_distribution_version is version('20.04', '>=')
 
-- name: Add tailscale apt key.
+- name: Add Tailscale apt key.
   apt_key:
     url: "{{ tailscale_apt_gpg_key }}"
     state: present
 
-- name: Add tailscale repository.
+- name: Add Tailscale repository.
   apt_repository:
     repo: "{{ tailscale_apt_repository }}"
     state: present

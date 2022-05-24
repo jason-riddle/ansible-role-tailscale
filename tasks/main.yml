@@ -2,7 +2,7 @@
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: Install tailscale.
+- name: Install Tailscale.
   package:
     name: tailscale
     state: present
