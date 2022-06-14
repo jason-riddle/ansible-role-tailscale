@@ -6,3 +6,9 @@
   package:
     name: tailscale
     state: present
+
+- name: Ensure service is running as desired.
+  service:
+    name: "{{ tailscale_service_name }}"
+    state: "{{ tailscale_service_state }}"
+    enabled: "{{ tailscale_service_enabled }}"
