@@ -7,6 +7,6 @@
 
 - name: Register the node.
   command: |
-    tailscale up --authkey="{{ tailscale_register_authkey }}" --timeout="{{ tailscale_register_timeout }}"
+    tailscale up --authkey="{{ tailscale_register_authkey }}" --timeout="{{ tailscale_register_timeout }}" {{ tailscale_register_args }}
   tags:
     - molecule-idempotence-notest
