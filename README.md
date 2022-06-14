@@ -23,6 +23,18 @@ Apt repository options for Tailscale installation.
 
 Configure the state of the Tailscale service.
 
+    tailscale_register_node: false
+
+Register the node to a Tailnet.
+
+    tailscale_register_authkey: ""
+
+Register the node with this authkey.
+
+    tailscale_register_timeout: "30s"
+
+Max amount of time to wait for the Tailscale service to initialize.
+
 ## Dependencies
 
 None.

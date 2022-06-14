@@ -12,3 +12,6 @@
     name: "{{ tailscale_service_name }}"
     state: "{{ tailscale_service_state }}"
     enabled: "{{ tailscale_service_enabled }}"
+
+- include_tasks: register.yml
+  when: tailscale_register_node | bool
