@@ -17,6 +17,12 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Apt repository options for Tailscale installation.
 
+    tailscale_service_name: "tailscaled"
+    tailscale_service_state: started
+    tailscale_service_enabled: true
+
+Configure the state of the Tailscale service.
+
 ## Dependencies
 
 None.
