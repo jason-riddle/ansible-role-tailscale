@@ -5,3 +5,7 @@ tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_dist
 tailscale_service_name: "tailscaled"
 tailscale_service_state: started
 tailscale_service_enabled: true
+
+tailscale_register_node: false
+tailscale_register_authkey: ""
+tailscale_register_timeout: "30s"
