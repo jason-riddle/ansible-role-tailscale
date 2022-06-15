@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    tailscale_register_node: true
+    tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_register_args: "--hostname=github-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - role: jason_riddle.tailscale
+
+  post_tasks:
+    - name: Verify Tailscale is installed.
+      command: tailscale --version
+      changed_when: false

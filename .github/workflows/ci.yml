@@ -9,6 +9,9 @@ on:
     branches:
       - '*'
 
+env:
+  TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
 defaults:
   run:
     working-directory: 'jason_riddle.tailscale'
