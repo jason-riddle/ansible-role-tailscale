@@ -35,7 +35,7 @@ Register the node with this authkey.
 
 Max amount of time to wait for the Tailscale service to initialize.
 
-    tailscale_register_args: ""
+    tailscale_register_args: "--accept-routes"
 
 Additional args to use when registering. See https://tailscale.com/kb/1080/cli/#up.
 
