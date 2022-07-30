@@ -45,10 +45,19 @@ None.
 
 ## Example Playbook
 
-    - hosts: all
+### Install and register the agent using a hostname
 
-      roles:
-        - jason_riddle.tailscale
+```yaml
+- hosts: all
+
+  vars:
+    tailscale_register_node: true
+    tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_register_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+
+  roles:
+    - jason_riddle.tailscale
+```
 
 ## License
 
