@@ -1,0 +1,10 @@
+---
+- name: Assert that tailscale_cert_domain is not empty.
+  assert:
+    that:
+      - tailscale_cert_domain | length > 0
+    quiet: true
+
+- name: Generate the TLS cert.
+  command: |
+    tailscale cert "{{ tailscale_cert_domain }}"
