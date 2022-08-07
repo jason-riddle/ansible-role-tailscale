@@ -18,6 +18,10 @@ tailscale_register_args: "--accept-routes"
 # Cert options.
 tailscale_generate_cert: false
 tailscale_cert_domain: ""
+tailscale_cert_dir: "/usr/local/etc/ssl/certs"
+tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
+tailscale_cert_private_key_dir: "/usr/local/etc/ssl/private"
+tailscale_cert_private_key_filename: "{{ tailscale_cert_domain }}.key"
 
 # /etc/default/tailscaled options.
 tailscale_default_tailscaled_options:
