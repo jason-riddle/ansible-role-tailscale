@@ -20,6 +20,7 @@ Apt repository options for Tailscale installation.
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started
     tailscale_service_enabled: true
+    tailscale_restart_handler_state: restarted
 
 Configure the state of the Tailscale service.
 
