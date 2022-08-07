@@ -40,6 +40,13 @@ Max amount of time to wait for the Tailscale service to initialize.
 
 Additional args to use when registering. See https://tailscale.com/kb/1080/cli/#up.
 
+    tailscale_default_tailscaled_options:
+      # Allow www-data user to fetch certs
+      - regexp: "^#?TS_PERMIT_CERT_UID"
+        line: "TS_PERMIT_CERT_UID=\"www-data\""
+
+Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
+
 ## Dependencies
 
 None.
