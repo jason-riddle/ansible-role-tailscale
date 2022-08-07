@@ -15,6 +15,10 @@ tailscale_register_authkey: ""
 tailscale_register_timeout: "30s"
 tailscale_register_args: "--accept-routes"
 
+# Cert options.
+tailscale_generate_cert: false
+tailscale_cert_domain: ""
+
 # /etc/default/tailscaled options.
 tailscale_default_tailscaled_options:
   # Allow www-data user to fetch certs

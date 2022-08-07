@@ -40,6 +40,14 @@ Max amount of time to wait for the Tailscale service to initialize.
 
 Additional args to use when registering. See https://tailscale.com/kb/1080/cli/#up.
 
+    tailscale_generate_cert: false
+
+Generate the TLS cert for HTTPS. See https://tailscale.com/kb/1153/enabling-https/.
+
+    tailscale_cert_domain: ""
+
+The MagicDNS domain name for the TLS cert.
+
     tailscale_default_tailscaled_options:
       # Allow www-data user to fetch certs
       - regexp: "^#?TS_PERMIT_CERT_UID"
