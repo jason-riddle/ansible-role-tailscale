@@ -20,8 +20,9 @@ Apt repository options for Tailscale installation.
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started
     tailscale_service_enabled: true
+    tailscale_restart_handler_state: restarted
 
-Configure the state of the Tailscale service.
+Control the state of the Tailscale service, and whether it should start on boot.
 
     tailscale_register_node: false
 
@@ -38,6 +39,13 @@ Max amount of time to wait for the Tailscale service to initialize.
     tailscale_register_args: "--accept-routes"
 
 Additional args to use when registering. See https://tailscale.com/kb/1080/cli/#up.
+
+    tailscale_default_tailscaled_options:
+      # Allow www-data user to fetch certs
+      - regexp: "^#?TS_PERMIT_CERT_UID"
+        line: "TS_PERMIT_CERT_UID=\"www-data\""
+
+Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
 
 ## Dependencies
 

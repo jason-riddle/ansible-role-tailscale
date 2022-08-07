@@ -15,3 +15,13 @@
 
 - include_tasks: register.yml
   when: tailscale_register_node | bool
+
+- name: Configure options in /etc/default/tailscaled.
+  lineinfile:
+    dest: /etc/default/tailscaled
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    insertafter: EOF
+    state: present
+  with_items: "{{ tailscale_default_tailscaled_options }}"
+  notify: restart tailscaled
