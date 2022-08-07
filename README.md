@@ -22,7 +22,7 @@ Apt repository options for Tailscale installation.
     tailscale_service_enabled: true
     tailscale_restart_handler_state: restarted
 
-Configure the state of the Tailscale service.
+Control the state of the Tailscale service, and whether it should start on boot.
 
     tailscale_register_node: false
 
