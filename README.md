@@ -17,6 +17,10 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Apt repository options for Tailscale installation.
 
+    tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/tailscale.repo"
+
+Yum repository options for Tailscale installation.
+
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started
     tailscale_service_enabled: true
