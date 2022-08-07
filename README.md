@@ -74,7 +74,7 @@ None.
     - jason_riddle.tailscale
 ```
 
-### **In beta.** Generate a TLS cert for HTTPS and allow caddy user to fetch cert.
+### (In beta) Generate a TLS cert for HTTPS and allow caddy user to fetch cert.
 
 ```yaml
 - hosts: all
