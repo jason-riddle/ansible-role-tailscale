@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jason-riddle/ansible-role-tailscale/workflows/CI/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
 
-Installs [Tailscale](https://tailscale.com/) on Debian/Ubuntu.
+Installs [Tailscale](https://tailscale.com/) on Debian/Ubuntu and RedHat/CentOS.
 
 ## Requirements
 
@@ -16,6 +16,10 @@ Available variables are listed below, along with default values (see `defaults/m
     tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 
 Apt repository options for Tailscale installation.
+
+    tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/tailscale.repo"
+
+Yum repository options for Tailscale installation.
 
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started

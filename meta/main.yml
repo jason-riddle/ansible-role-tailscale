@@ -11,10 +11,14 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - all
+        - buster # 10
     - name: Ubuntu
       versions:
-        - all
+        - bionic # 18.04
+    - name: EL
+      versions:
+        - 7
+        - 8
   galaxy_tags:
     - system
     - tailscale
