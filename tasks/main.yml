@@ -27,7 +27,11 @@
     insertafter: EOF
     state: present
   with_items: "{{ tailscale_default_tailscaled_options }}"
-  notify: restart tailscaled
+  notify:
+    - restart tailscaled
+
+# Read /etc/default/tailscaled before proceeding
+- meta: flush_handlers
 
 - include_tasks: generate-cert.yml
   when: tailscale_generate_cert | bool
