@@ -6,7 +6,7 @@
   vars:
     tailscale_register_node: true
     tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_register_args: "--hostname=github-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_register_args: "--hostname=github-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture }}"
 
   pre_tasks:
     - name: Update apt cache.
