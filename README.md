@@ -24,7 +24,6 @@ Yum repository options for Tailscale installation.
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started
     tailscale_service_enabled: true
-    tailscale_restart_handler_state: restarted
 
 Control the state of the Tailscaled service, and whether it should start on boot.
 

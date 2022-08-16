@@ -10,7 +10,6 @@ tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/{{ ansible_dist
 tailscale_service_name: "tailscaled"
 tailscale_service_state: started
 tailscale_service_enabled: true
-tailscale_restart_handler_state: restarted
 
 # Register options.
 tailscale_register_node: false

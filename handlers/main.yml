@@ -1,5 +1,5 @@
 ---
 - name: restart tailscaled
   service:
-    name: "{{ tailscale_service_name }}"
-    state: "{{ tailscale_restart_handler_state }}"
+    name: tailscaled
+    state: restarted
