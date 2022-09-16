@@ -1,8 +1,8 @@
-# Ansible Role for Tailscale
+# Ansible Role - Tailscale
 
 [![CI](https://github.com/jason-riddle/ansible-role-tailscale/workflows/CI/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
 
-Installs [Tailscale](https://tailscale.com/) on Debian/Ubuntu and RedHat/CentOS.
+Manage [Tailscale](https://tailscale.com/) on Linux.
 
 ## Requirements
 
