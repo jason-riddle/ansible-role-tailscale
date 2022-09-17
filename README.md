@@ -4,6 +4,11 @@
 
 Manage [Tailscale](https://tailscale.com/) on Linux.
 
+Features:
+- Install Tailscale.
+- Register the node to the Tailscale network.
+- (In Beta) Provision TLS certificates for HTTPS traffic.
+
 ## Requirements
 
 None.
@@ -63,7 +68,16 @@ None.
 
 ## Example Playbook
 
-### Register the node using a custom hostname
+### Install Tailscale.
+
+```yaml
+- hosts: all
+
+  roles:
+    - jason_riddle.tailscale
+```
+
+### Register the node to the Tailscale network.
 
 ```yaml
 - hosts: all
@@ -71,13 +85,14 @@ None.
   vars:
     tailscale_register_node: true
     tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    # Optional: Specify args to `tailscale up` command.
     tailscale_register_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
 
   roles:
     - jason_riddle.tailscale
 ```
 
-### (In beta) Generate a TLS cert for HTTPS and allow caddy user to fetch cert.
+### (In Beta) Provision TLS certificates for HTTPS traffic.
 
 ```yaml
 - hosts: all
