@@ -20,6 +20,7 @@
   when: tailscale_register_node | bool
 
 - include_tasks: configure-default-options.yml
+  when: tailscale_configure_default_options | bool
 
 # Read /etc/default/tailscaled before proceeding
 - meta: flush_handlers
