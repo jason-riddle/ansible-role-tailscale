@@ -26,4 +26,4 @@
 - meta: flush_handlers
 
 - include_tasks: generate-cert.yml
-  when: tailscale_generate_cert | bool
+  when: tailscale_cert_enabled | bool
