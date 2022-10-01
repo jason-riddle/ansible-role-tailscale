@@ -41,7 +41,7 @@ Register the node. Runs `tailscale up` and passes arguments to that command. `ta
 
 See https://tailscale.com/kb/1080/cli/#up.
 
-    tailscale_generate_cert: false
+    tailscale_cert_enabled: false
     tailscale_cert_domain: ""
     tailscale_cert_dir: "/usr/local/etc/ssl/certs"
     tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
@@ -99,7 +99,7 @@ None.
 - hosts: all
 
   vars:
-    tailscale_generate_cert: true
+    tailscale_cert_enabled: true
     tailscale_cert_domain: "machine-name.domain-alias.ts.net"
     tailscale_cert_dir: "/usr/local/etc/ssl/certs"
     tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
