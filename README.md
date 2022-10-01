@@ -54,14 +54,14 @@ Generate a TLS cert for HTTPS. Runs `tailscale cert` and passes arguments to tha
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
-    tailscale_configure_default_options: false
-    tailscale_default_tailscaled_options:
+    tailscale_default_options_enabled: false
+    tailscale_default_options_settings:
       # Allow caddy user to fetch cert.
       # See https://tailscale.com/kb/1190/caddy-certificates/#provide-non-root-users-with-access-to-fetch-certificate.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
 
-Configure /etc/default/tailscaled options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
+Configure default options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
 
 ## Dependencies
 
@@ -105,8 +105,8 @@ None.
     tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
     tailscale_cert_private_key_dir: "/usr/local/etc/ssl/private"
     tailscale_cert_private_key_filename: "{{ tailscale_cert_domain }}.key"
-    tailscale_configure_default_options: true
-    tailscale_default_tailscaled_options:
+    tailscale_default_options_enabled: true
+    tailscale_default_options_settings:
       # Allow caddy user to fetch cert.
       # See https://tailscale.com/kb/1190/caddy-certificates/#provide-non-root-users-with-access-to-fetch-certificate.
       - regexp: "^#?TS_PERMIT_CERT_UID"
