@@ -6,6 +6,6 @@
     line: "{{ item.line }}"
     insertafter: EOF
     state: present
-  with_items: "{{ tailscale_default_tailscaled_options }}"
+  with_items: "{{ tailscale_default_options_settings }}"
   notify:
     - restart tailscaled
