@@ -25,5 +25,5 @@
 # Read /etc/default/tailscaled before proceeding
 - meta: flush_handlers
 
-- include_tasks: generate-cert.yml
+- include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
