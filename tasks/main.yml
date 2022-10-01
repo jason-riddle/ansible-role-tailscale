@@ -19,7 +19,7 @@
 - include_tasks: register.yml
   when: tailscale_register_node | bool
 
-- include_tasks: configure-default-options.yml
+- include_tasks: default-options.yml
   when: tailscale_default_options_enabled | bool
 
 # Read /etc/default/tailscaled before proceeding
