@@ -15,7 +15,7 @@ tailscale_service_enabled: true
 tailscale_register_node: false
 tailscale_register_authkey: ""
 tailscale_register_timeout: "30s"
-tailscale_register_args: "--accept-routes"
+tailscale_register_extra_args: "--accept-routes"
 
 # Cert options.
 tailscale_generate_cert: false

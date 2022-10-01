@@ -35,7 +35,7 @@ Control the state of the Tailscaled service, and whether it should start on boot
     tailscale_register_node: false
     tailscale_register_authkey: ""
     tailscale_register_timeout: "30s"
-    tailscale_register_args: "--accept-routes"
+    tailscale_register_extra_args: "--accept-routes"
 
 Register the node. Runs `tailscale up` and passes arguments to that command. `tailscale_register_authkey` must be set.
 
@@ -87,7 +87,7 @@ None.
     tailscale_register_node: true
     tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
     # Optional: Specify args to `tailscale up` command.
-    tailscale_register_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_register_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
 
   roles:
     - jason_riddle.tailscale
