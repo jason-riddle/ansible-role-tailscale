@@ -61,7 +61,7 @@ See https://tailscale.com/kb/1153/enabling-https/.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
 
-Configure /etc/default/tailscaled options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
+Configure default options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
 
 ## Dependencies
 
