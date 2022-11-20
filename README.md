@@ -30,14 +30,14 @@ Yum repository options for Tailscale installation.
     tailscale_service_state: started
     tailscale_service_enabled: true
 
-Control the state of the Tailscaled service, and whether it should start on boot.
+Control the state of the tailscaled service.
 
     tailscale_register_node: false
     tailscale_register_authkey: ""
     tailscale_register_timeout: "30s"
     tailscale_register_extra_args: "--accept-routes"
 
-Register the node. Runs `tailscale up` and passes arguments to that command. `tailscale_register_authkey` must be set.
+Register the node. Behind the scenes, runs `tailscale up`. `tailscale_register_authkey` must be set.
 
 See https://tailscale.com/kb/1080/cli/#up.
 
@@ -50,7 +50,7 @@ See https://tailscale.com/kb/1080/cli/#up.
 
 **This feature is in beta. It may be removed or changed in a future release.**
 
-Generate a TLS cert for HTTPS. Runs `tailscale cert` and passes arguments to that command. `tailscale_cert_domain` must be set.
+Generate a TLS cert for HTTPS. Behind the scenes, runs `tailscale cert`. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
@@ -61,7 +61,7 @@ See https://tailscale.com/kb/1153/enabling-https/.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
 
-Configure default options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
+Configures /etc/default/tailscaled.
 
 ## Dependencies
 
