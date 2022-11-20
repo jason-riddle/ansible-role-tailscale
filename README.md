@@ -95,6 +95,8 @@ None.
 
 ### (Beta Feature) Provision HTTPS certificates.
 
+See https://tailscale.com/kb/1153/enabling-https/.
+
 ```yaml
 - hosts: all
 
