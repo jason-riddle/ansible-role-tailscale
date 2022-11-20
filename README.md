@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jason-riddle/ansible-role-tailscale/workflows/CI/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
 
-Manage [Tailscale](https://tailscale.com/) on Linux.
+[Tailscale](https://tailscale.com/) on Linux.
 
 Features:
 - Install Tailscale.
