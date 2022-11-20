@@ -17,7 +17,7 @@
     enabled: "{{ tailscale_service_enabled }}"
 
 - include_tasks: register.yml
-  when: tailscale_register_node | bool
+  when: tailscale_up_node | bool
 
 - include_tasks: default-options.yml
   when: tailscale_default_options_enabled | bool

@@ -32,12 +32,12 @@ Yum repository options for Tailscale installation.
 
 Control the state of the tailscaled service.
 
-    tailscale_register_node: false
-    tailscale_register_authkey: ""
-    tailscale_register_timeout: "30s"
-    tailscale_register_extra_args: "--accept-routes"
+    tailscale_up_node: false
+    tailscale_up_authkey: ""
+    tailscale_up_timeout: "30s"
+    tailscale_up_extra_args: "--accept-routes"
 
-Register the node. Behind the scenes, runs `tailscale up`. `tailscale_register_authkey` must be set.
+Register the node. Behind the scenes, runs `tailscale up`. `tailscale_up_authkey` must be set.
 
 See https://tailscale.com/kb/1080/cli/#up.
 
@@ -84,10 +84,10 @@ None.
 - hosts: all
 
   vars:
-    tailscale_register_node: true
-    tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_up_node: true
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
     # Optional: Specify args to `tailscale up` command.
-    tailscale_register_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
 
   roles:
     - jason_riddle.tailscale

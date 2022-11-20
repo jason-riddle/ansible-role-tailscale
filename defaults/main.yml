@@ -12,10 +12,10 @@ tailscale_service_state: started
 tailscale_service_enabled: true
 
 # Register options.
-tailscale_register_node: false
-tailscale_register_authkey: ""
-tailscale_register_timeout: "30s"
-tailscale_register_extra_args: "--accept-routes"
+tailscale_up_node: false
+tailscale_up_authkey: ""
+tailscale_up_timeout: "30s"
+tailscale_up_extra_args: "--accept-routes"
 
 # Cert options.
 tailscale_cert_enabled: false
