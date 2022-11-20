@@ -2,12 +2,12 @@
 
 [![CI](https://github.com/jason-riddle/ansible-role-tailscale/workflows/CI/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
 
-Manage [Tailscale](https://tailscale.com/) on Linux.
+[Tailscale](https://tailscale.com/) on Linux.
 
 Features:
 - Install Tailscale.
-- Register the node to the Tailscale network.
-- (In Beta) Provision TLS certificates for HTTPS traffic.
+- Register Node to Tailnet.
+- (Beta Feature) Provision HTTPS certificates.
 
 ## Requirements
 
@@ -30,14 +30,14 @@ Yum repository options for Tailscale installation.
     tailscale_service_state: started
     tailscale_service_enabled: true
 
-Control the state of the Tailscaled service, and whether it should start on boot.
+Control the state of the tailscaled service.
 
-    tailscale_register_node: false
-    tailscale_register_authkey: ""
-    tailscale_register_timeout: "30s"
-    tailscale_register_extra_args: "--accept-routes"
+    tailscale_up_node: false
+    tailscale_up_authkey: ""
+    tailscale_up_timeout: "30s"
+    tailscale_up_extra_args: "--accept-routes"
 
-Register the node. Runs `tailscale up` and passes arguments to that command. `tailscale_register_authkey` must be set.
+Run `tailscale up` with arguments. `tailscale_up_authkey` must be set.
 
 See https://tailscale.com/kb/1080/cli/#up.
 
@@ -50,7 +50,7 @@ See https://tailscale.com/kb/1080/cli/#up.
 
 **This feature is in beta. It may be removed or changed in a future release.**
 
-Generate a TLS cert for HTTPS. Runs `tailscale cert` and passes arguments to that command. `tailscale_cert_domain` must be set.
+Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
@@ -61,7 +61,7 @@ See https://tailscale.com/kb/1153/enabling-https/.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
 
-Configure default options. Use Ansible's `lineinfile` module to ensure certain settings are configured inside `/etc/default/tailscaled`.
+Configures /etc/default/tailscaled.
 
 ## Dependencies
 
@@ -78,22 +78,24 @@ None.
     - jason_riddle.tailscale
 ```
 
-### Register the node to the Tailscale network.
+### Register Node to Tailnet.
 
 ```yaml
 - hosts: all
 
   vars:
-    tailscale_register_node: true
-    tailscale_register_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_up_node: true
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
     # Optional: Specify args to `tailscale up` command.
-    tailscale_register_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
 
   roles:
     - jason_riddle.tailscale
 ```
 
-### (In Beta) Provision TLS certificates for HTTPS traffic.
+### (Beta Feature) Provision HTTPS certificates.
+
+See https://tailscale.com/kb/1153/enabling-https/.
 
 ```yaml
 - hosts: all
