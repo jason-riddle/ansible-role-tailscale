@@ -37,7 +37,7 @@ Control the state of the tailscaled service.
     tailscale_up_timeout: "30s"
     tailscale_up_extra_args: "--accept-routes"
 
-Register the node. Behind the scenes, runs `tailscale up`. `tailscale_up_authkey` must be set.
+Run `tailscale up` with arguments. `tailscale_up_authkey` must be set.
 
 See https://tailscale.com/kb/1080/cli/#up.
 
@@ -50,7 +50,7 @@ See https://tailscale.com/kb/1080/cli/#up.
 
 **This feature is in beta. It may be removed or changed in a future release.**
 
-Generate a TLS cert for HTTPS. Behind the scenes, runs `tailscale cert`. `tailscale_cert_domain` must be set.
+Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
