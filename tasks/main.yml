@@ -16,7 +16,7 @@
     state: "{{ tailscale_service_state }}"
     enabled: "{{ tailscale_service_enabled }}"
 
-- include_tasks: register.yml
+- include_tasks: up.yml
   when: tailscale_up_node | bool
 
 - include_tasks: default-options.yml
