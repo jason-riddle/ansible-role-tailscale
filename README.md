@@ -7,7 +7,7 @@
 Features:
 - Install Tailscale.
 - Register Node to Tailnet.
-- (In Beta) Provision TLS certificates for HTTPS traffic.
+- (Beta Feature) Provision HTTPS certificates.
 
 ## Requirements
 
@@ -93,7 +93,7 @@ None.
     - jason_riddle.tailscale
 ```
 
-### (In Beta) Provision TLS certificates for HTTPS traffic.
+### (Beta Feature) Provision HTTPS certificates.
 
 ```yaml
 - hosts: all
