@@ -1,0 +1,27 @@
+---
+name: CI - Super-Linter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v3
+
+      - name: Read env vars from super-linter.env.
+        run: |
+          cat .github/env/super-linter.env >> "$GITHUB_ENV"
+
+      - name: Lint code.
+        uses: github/super-linter@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
