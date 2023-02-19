@@ -16,3 +16,4 @@
     tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
   tags:
     - molecule-idempotence-notest
+  no_log: "{{ tailscale_up_no_log }}"
