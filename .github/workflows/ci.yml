@@ -39,45 +39,45 @@ jobs:
         run: |
           yamllint .
 
-  # molecule:
-  #   name: Molecule
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - distro: debian10 # Buster
-  #           playbook: converge.yml
-  #         - distro: ubuntu1804 # Bionic Beaver
-  #           playbook: converge.yml
-  #         - distro: centos7
-  #           playbook: converge.yml
-  #         - distro: centos8
-  #           playbook: converge.yml
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - distro: debian10 # Buster
+            playbook: converge.yml
+          - distro: ubuntu1804 # Bionic Beaver
+            playbook: converge.yml
+          - distro: centos7
+            playbook: converge.yml
+          - distro: centos8
+            playbook: converge.yml
 
-  #   steps:
-  #     - name: Check out the codebase.
-  #       uses: actions/checkout@v3
-  #       with:
-  #         path: 'jason_riddle.tailscale'
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v3
+        with:
+          path: 'jason_riddle.tailscale'
 
-  #     - name: Set up Python 3.
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.x'
+      - name: Set up Python 3.
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-  #     - name: Install test dependencies.
-  #       run: pip3 install ansible molecule[docker] docker
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule[docker] docker
 
-  #     - name: Set HOSTNAME.
-  #       run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
+      - name: Set HOSTNAME.
+        run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
 
-  #     - name: Run Molecule tests.
-  #       run: |
-  #         molecule test --all
-  #       env:
-  #         PY_COLORS: '1'
-  #         ANSIBLE_FORCE_COLOR: '1'
-  #         ANSIBLE_LOAD_CALLBACK_PLUGINS: true
-  #         ANSIBLE_STDOUT_CALLBACK: 'yaml'
-  #         MOLECULE_DISTRO: ${{ matrix.distro }}
-  #         MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      - name: Run Molecule tests.
+        run: |
+          molecule test --all
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
+          ANSIBLE_STDOUT_CALLBACK: 'yaml'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
