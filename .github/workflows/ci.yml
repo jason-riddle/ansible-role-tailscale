@@ -49,11 +49,10 @@ jobs:
             playbook: converge.yml
           - distro: ubuntu1804 # Bionic Beaver
             playbook: converge.yml
-          # TODO: Reenable.
-          # - distro: centos7
-          #   playbook: converge.yml
-          # - distro: centos8
-          #   playbook: converge.yml
+          - distro: centos7
+            playbook: converge.yml
+          - distro: centos8
+            playbook: converge.yml
 
     steps:
       - name: Check out the codebase.
