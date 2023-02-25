@@ -47,9 +47,9 @@ jobs:
         include:
           - distro: debian10 # Buster
             playbook: converge.yml
+          - distro: ubuntu1804 # Bionic Beaver
+            playbook: converge.yml
           # TODO: Reenable.
-          # - distro: ubuntu1804 # Bionic Beaver
-          #   playbook: converge.yml
           # - distro: centos7
           #   playbook: converge.yml
           # - distro: centos8
