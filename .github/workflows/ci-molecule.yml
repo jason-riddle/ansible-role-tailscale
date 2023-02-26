@@ -50,7 +50,7 @@ jobs:
       - name: Set HOSTNAME.
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
 
-      - name: Run Molecule tests.
+      - name: Run Molecule default suite test.
         run: |
           molecule test --scenario-name default
         env:
