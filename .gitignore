@@ -2,4 +2,6 @@
 */__pycache__
 *.pyc
 .cache
+.devenv
+.devenv.flake.nix
 .venv
