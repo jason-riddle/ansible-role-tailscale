@@ -6,6 +6,9 @@ tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_dist
 # Used only for RedHat/CentOS.
 tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/tailscale.repo"
 
+# Install options.
+tailscale_install_tailscale: true
+
 # Service options.
 tailscale_service_name: "tailscaled"
 tailscale_service_state: started
