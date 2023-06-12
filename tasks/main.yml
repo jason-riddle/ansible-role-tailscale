@@ -9,7 +9,6 @@
   package:
     name: tailscale
     state: present
-  when: tailscale_install_tailscale | bool
 
 - name: Ensure service is running as desired.
   service:

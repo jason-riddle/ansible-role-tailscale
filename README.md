@@ -26,10 +26,6 @@ Apt repository options for Tailscale installation.
 
 Yum repository options for Tailscale installation.
 
-    tailscale_install_tailscale: true
-
-Install Tailscale.
-
     tailscale_service_name: "tailscaled"
     tailscale_service_state: started
     tailscale_service_enabled: true
