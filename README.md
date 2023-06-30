@@ -35,7 +35,7 @@ Control the state of the tailscaled service.
     tailscale_up_node: false
     tailscale_up_authkey: ""
     tailscale_up_timeout: "30s"
-    tailscale_up_extra_args: "--accept-routes"
+    tailscale_up_extra_args: ""
     tailscale_up_no_log: true
 
 Run `tailscale up` with arguments. `tailscale_up_authkey` must be set.
