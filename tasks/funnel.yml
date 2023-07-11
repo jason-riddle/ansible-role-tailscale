@@ -1,0 +1,24 @@
+---
+# - name: Assert that tailscale_up_authkey is not empty.
+#   assert:
+#     that:
+#       - tailscale_up_authkey | length > 0
+#     quiet: true
+
+# - name: Assert that tailscale_up_timeout is not empty.
+#   assert:
+#     that:
+#       - tailscale_up_timeout | length > 0
+#     quiet: true
+
+- name: Run serve.
+  command: |
+    tailscale serve https / http://127.0.0.1:3000
+  tags:
+    - molecule-idempotence-notest
+
+- name: Run funnel.
+  command: |
+    tailscale funnel 443 on
+  tags:
+    - molecule-idempotence-notest
