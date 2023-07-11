@@ -136,6 +136,8 @@ See https://tailscale.com/kb/1223/tailscale-funnel/.
 - hosts: all
 
   vars:
+    tailscale_up_node: true
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
     tailscale_funnel_enabled: true
 
   roles:
