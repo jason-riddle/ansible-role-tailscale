@@ -106,3 +106,4 @@ jobs:
           ANSIBLE_STDOUT_CALLBACK: 'yaml'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
