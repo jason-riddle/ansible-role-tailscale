@@ -56,7 +56,7 @@ Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
-    tailscale_cert_enabled: false
+    tailscale_funnel_enabled: false
 
 **This feature is in beta. It may be removed or changed in a future release.**
 
