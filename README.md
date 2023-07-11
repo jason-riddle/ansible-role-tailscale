@@ -8,6 +8,7 @@ Features:
 - Install Tailscale.
 - Register Node to Tailnet.
 - (Beta Feature) Provision HTTPS certificates.
+- (Beta Feature) Run Funnel.
 
 ## Requirements
 
@@ -54,6 +55,14 @@ See https://tailscale.com/kb/1080/cli/#up.
 Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
+
+    tailscale_cert_enabled: false
+
+**This feature is in beta. It may be removed or changed in a future release.**
+
+Run `tailscale funnel` with arguments.
+
+See https://tailscale.com/kb/1223/tailscale-funnel/.
 
     tailscale_default_options_enabled: false
     tailscale_default_options_settings:
@@ -114,6 +123,20 @@ See https://tailscale.com/kb/1153/enabling-https/.
       # See https://tailscale.com/kb/1190/caddy-certificates/#provide-non-root-users-with-access-to-fetch-certificate.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
+
+  roles:
+    - jason_riddle.tailscale
+```
+
+### (Beta Feature) Run Funnel.
+
+See https://tailscale.com/kb/1223/tailscale-funnel/.
+
+```yaml
+- hosts: all
+
+  vars:
+    tailscale_funnel_enabled: true
 
   roles:
     - jason_riddle.tailscale
