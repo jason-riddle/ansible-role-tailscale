@@ -2,8 +2,11 @@
 extends: default
 
 rules:
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable
   line-length:
-    max: 180
+    max: 250
     level: warning
   truthy:
     ignore: |

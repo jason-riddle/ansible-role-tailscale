@@ -5,7 +5,7 @@
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
-- name: Install Tailscale.
+- name: Install tailscale.
   package:
     name: tailscale
     state: present
