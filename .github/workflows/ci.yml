@@ -53,8 +53,9 @@ jobs:
           # TODO: Failed to get D-Bus connection: No such file or directory
           # - distro: centos7
           #   playbook: converge.yml
-          - distro: centos8
-            playbook: converge.yml
+          # TODO: Remove in future release.
+          # - distro: centos8
+          #   playbook: converge.yml
 
     steps:
       - name: Check out the codebase.
