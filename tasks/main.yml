@@ -30,4 +30,4 @@
 
 # TODO: Include this when there are ports set
 - include_tasks: funnel.yml
-# when: tailscale_funnel_enabled | bool
+  when: (tailscale_funnel_ports_enabled|length>0) or (tailscale_funnel_ports_enabled|length>0)
