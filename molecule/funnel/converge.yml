@@ -7,6 +7,7 @@
     tailscale_up_node: true
     tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
     tailscale_up_extra_args: "--hostname=github-ci-funnel-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture | replace('_', '-') }}"
+    tailscale_funnel_enabled: true
 
   pre_tasks:
     - name: Update apt cache.
