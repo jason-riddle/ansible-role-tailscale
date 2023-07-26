@@ -3,13 +3,13 @@
   assert:
     that:
       - tailscale_up_authkey | length > 0
-    quiet: true
+    # quiet: true
 
 - name: Assert that tailscale_up_timeout is not empty.
   assert:
     that:
       - tailscale_up_timeout | length > 0
-    quiet: true
+    # quiet: true
 
 - name: Run tailscale up and join the tailnet.
   command: |
