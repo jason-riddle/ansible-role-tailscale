@@ -1,0 +1,6 @@
+---
+- name: Run funnel.
+  command: |
+    tailscale funnel 443 on
+  tags:
+    - molecule-idempotence-notest

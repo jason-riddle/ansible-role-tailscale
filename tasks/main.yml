@@ -27,3 +27,6 @@
 
 - include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
+
+- include_tasks: funnel.yml
+  when: tailscale_funnel_enabled | bool
