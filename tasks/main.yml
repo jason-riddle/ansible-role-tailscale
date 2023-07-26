@@ -1,8 +1,10 @@
 ---
-- include_tasks: setup-Debian.yml
+- name: Include setup-Debian.yml
+  include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-- include_tasks: setup-RedHat.yml
+- name: Include setup-RedHat.yml
+  include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
 - name: Install tailscale.
@@ -16,14 +18,17 @@
     state: "{{ tailscale_service_state }}"
     enabled: "{{ tailscale_service_enabled }}"
 
-- include_tasks: up.yml
+- name: Include up.yml
+  include_tasks: up.yml
   when: tailscale_up_node | bool
 
-- include_tasks: default-options.yml
+- name: Include default-options.yml
+  include_tasks: default-options.yml
   when: tailscale_default_options_enabled | bool
 
 # Read /etc/default/tailscaled before proceeding
 - meta: flush_handlers
 
-- include_tasks: cert.yml
+- name: Include cert.yml
+  include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
