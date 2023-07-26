@@ -20,7 +20,7 @@
 
 - name: Include up.yml
   include_tasks: up.yml
-  when: tailscale_up_node | bool
+  # when: tailscale_up_node | bool
 
 - name: Include default-options.yml
   include_tasks: default-options.yml
