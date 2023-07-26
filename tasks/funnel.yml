@@ -1,6 +1,7 @@
 ---
-- name: Run funnel.
+- name: Run funnel {{ item }} on.
   command: |
-    tailscale funnel 443 on
+    tailscale funnel {{ item }} on
   tags:
     - molecule-idempotence-notest
+  with_items: "{{ tailscale_funnel_ports_enabled }}"

@@ -28,5 +28,6 @@
 - include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
 
+# TODO: Include this when there are ports set
 - include_tasks: funnel.yml
-  when: tailscale_funnel_enabled | bool
+# when: tailscale_funnel_enabled | bool
