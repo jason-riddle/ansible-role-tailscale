@@ -33,3 +33,11 @@
     - name: Verify Tailscale is installed.
       command: tailscale --version
       changed_when: false
+
+    - name: Get tailscale status.
+      command: tailscale status --peers=false
+      changed_when: false
+      register: tailscale_status
+
+    - name: Print tailscale status.
+      debug: var=tailscale_status.stdout
