@@ -32,6 +32,9 @@
     - name: Get tailscale status.
       command: tailscale status --peers=false
       changed_when: false
+      # tailscale status returns a non-zero exit code when logged-out. So a
+      # simple workaround is just ignore all error codes and assume it
+      # installed correctly
       ignore_errors: true
       register: tailscale_status
 
