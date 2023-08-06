@@ -28,7 +28,8 @@
 
 # If /etc/default/tailscaled was modified, run 'restart tailscaled'
 # handler before running `tailscale cert` command.
-- meta: flush_handlers
+- name: Run handlers.
+  meta: flush_handlers
 
 - name: Include cert.yml
   include_tasks: cert.yml
