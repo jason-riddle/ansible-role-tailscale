@@ -30,7 +30,7 @@
     - role: jason_riddle.tailscale
 
   post_tasks:
-    - name: Verify Tailscale is installed.
+    - name: Verify tailscale is installed.
       command: tailscale --version
       changed_when: false
 
