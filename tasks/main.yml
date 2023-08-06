@@ -26,7 +26,8 @@
   include_tasks: default-options.yml
   when: tailscale_default_options_enabled | bool
 
-# Read /etc/default/tailscaled before proceeding
+# If /etc/default/tailscaled was modified, run 'restart tailscaled'
+# handler before running `tailscale cert` command.
 - meta: flush_handlers
 
 - name: Include cert.yml
