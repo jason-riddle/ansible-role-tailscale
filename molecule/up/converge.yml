@@ -6,7 +6,7 @@
   vars:
     tailscale_up_node: true
     tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_up_extra_args: "--timeout=30s --hostname=github-ci-up-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
+    tailscale_up_extra_args: "--accept-routes --hostname=github-ci-up-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:
     - name: Update apt cache.
