@@ -69,7 +69,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule-plugins[docker] docker
+        run: pip3 install ansible==8.2.0 ansible-core==2.15.2 ansible-compat==4.1.5 molecule==5.1.0 molecule-plugins[docker]==23.5.0 docker==6.1.3
 
       - name: Set HOSTNAME.
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
