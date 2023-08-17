@@ -13,7 +13,9 @@
   ];
 
   enterShell = ''
-    pip install ansible molecule-plugins[docker] docker
+    pip install pip-tools
+    pip-compile requirements.in --generate-hashes
+    pip install -r requirements.txt
   '';
 
   # https://devenv.sh/pre-commit-hooks/
