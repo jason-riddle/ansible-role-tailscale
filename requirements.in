@@ -1,6 +1,12 @@
+# https://pypi.org/project/ansible/
 ansible==8.2.0
+# https://pypi.org/project/ansible-core/
 ansible-core==2.15.2
+# https://pypi.org/project/ansible-compat/
 ansible-compat==4.1.5
+# https://pypi.org/project/molecule/
 molecule==5.1.0
+# https://pypi.org/project/molecule-plugins/
 molecule-plugins[docker]==23.5.0
+# https://pypi.org/project/docker/
 docker==6.1.3
