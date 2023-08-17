@@ -14,8 +14,8 @@
 
   enterShell = ''
     pip install pip-tools
-    pip-compile --generate-hashes requirements.in
-    pip install -r requirements.txt
+    pip-compile --generate-hashes requirements-test.in
+    pip install -r requirements-test.txt
   '';
 
   # https://devenv.sh/pre-commit-hooks/
