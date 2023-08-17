@@ -14,7 +14,7 @@
 
   enterShell = ''
     pip install pip-tools
-    pip-compile requirements.in --generate-hashes
+    pip-compile --generate-hashes requirements.in
     pip install -r requirements.txt
   '';
 
