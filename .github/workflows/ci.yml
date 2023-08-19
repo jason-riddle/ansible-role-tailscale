@@ -97,12 +97,6 @@ jobs:
         run: |
           molecule test --scenario-name default
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
-          ANSIBLE_STDOUT_CALLBACK: 'yaml'
-          ANSIBLE_PIPELINING: true
-          ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
 
@@ -110,12 +104,6 @@ jobs:
         run: |
           molecule test --scenario-name up
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
-          ANSIBLE_STDOUT_CALLBACK: 'yaml'
-          ANSIBLE_PIPELINING: true
-          ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
