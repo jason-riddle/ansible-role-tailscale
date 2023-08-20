@@ -78,7 +78,7 @@ None.
 
 ## Examples
 
-# Install the Tailscale agent, but don’t register the agent to a tailnet.
+### Install the Tailscale agent, but don’t register the agent to a tailnet.
 
 ```yaml
 - hosts: all
@@ -87,7 +87,7 @@ None.
     - jason_riddle.tailscale
 ```
 
-# Install the Tailscale agent and register the agent to a tailnet.
+### Install the Tailscale agent and register the agent to a tailnet.
 
 ```yaml
 - hosts: all
@@ -102,7 +102,7 @@ None.
     - jason_riddle.tailscale
 ```
 
-# Generate an HTTPS cert for serving HTTPS traffic.
+### Generate an HTTPS cert for serving HTTPS traffic.
 
 See https://tailscale.com/kb/1153/enabling-https/ for more information on this feature.
 
