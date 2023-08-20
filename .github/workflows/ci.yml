@@ -13,6 +13,19 @@ on:
     # REF: https://crontab.guru/#0_3_*_*_5
     - cron: "0 3 * * 5"
 
+env:
+  # Colors
+  # REF: http://web.archive.org/web/20230608140615/https://www.jeffgeerling.com/blog/2020/getting-colorized-output-molecule-and-ansible-on-github-actions-ci
+  PY_COLORS: '1'
+  ANSIBLE_FORCE_COLOR: '1'
+  # YAML Output
+  # REF: http://web.archive.org/web/20220707112219/https://www.jeffgeerling.com/blog/2018/use-ansibles-yaml-callback-plugin-better-cli-experience
+  ANSIBLE_STDOUT_CALLBACK: 'yaml'
+  ANSIBLE_LOAD_CALLBACK_PLUGINS: true
+  # SSH Pipelining
+  ANSIBLE_PIPELINING: true
+  ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
+
 defaults:
   run:
     working-directory: 'jason_riddle.tailscale'
@@ -84,12 +97,6 @@ jobs:
         run: |
           molecule test --scenario-name default
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
-          ANSIBLE_STDOUT_CALLBACK: 'yaml'
-          ANSIBLE_PIPELINING: true
-          ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
 
@@ -97,12 +104,6 @@ jobs:
         run: |
           molecule test --scenario-name up
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          ANSIBLE_LOAD_CALLBACK_PLUGINS: true
-          ANSIBLE_STDOUT_CALLBACK: 'yaml'
-          ANSIBLE_PIPELINING: true
-          ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
