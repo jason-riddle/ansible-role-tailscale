@@ -4,6 +4,8 @@
 
 Install, configure, and manage [Tailscale](https://tailscale.com/) on Linux.
 
+Tailscale is a modern, easy-to-use VPN. It enables you to share access to machines and devices in a secure way.
+
 ## Requirements
 
 None.
