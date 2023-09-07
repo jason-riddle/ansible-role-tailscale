@@ -34,3 +34,19 @@
 - name: Include cert.yml
   include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
+
+- name: Run serve for each item in tailscale_serve_content.
+  command: |
+    tailscale serve {{ item }}
+  tags:
+    - molecule-idempotence-notest
+  with_items: "{{ tailscale_serve_content }}"
+  when: tailscale_serve_enabled | bool
+
+- name: Run funnel for each port in tailscale_serve_funnel_ports_enabled.
+  command: |
+    tailscale funnel {{ item }} on
+  # tags:
+  #   - molecule-idempotence-notest
+  with_items: "{{ tailscale_serve_funnel_ports_enabled }}"
+  when: tailscale_serve_funnel_enabled | bool

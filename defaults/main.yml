@@ -26,6 +26,14 @@ tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
 tailscale_cert_private_key_dir: "/usr/local/etc/ssl/private"
 tailscale_cert_private_key_filename: "{{ tailscale_cert_domain }}.key"
 
+# Serve options.
+tailscale_serve_enabled: false
+tailscale_serve_content:
+  - "https:443 / http://127.0.0.1:3000"
+tailscale_serve_funnel_enabled: false
+tailscale_serve_funnel_ports_enabled:
+  - 443
+
 # Configure /etc/default/tailscaled options.
 tailscale_default_options_enabled: false
 tailscale_default_options_settings:
