@@ -30,4 +30,4 @@
       register: response
 
     - name: Print http response.
-      debug: var=response.content
+      debug: var=response
