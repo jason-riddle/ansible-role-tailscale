@@ -57,8 +57,8 @@ See https://tailscale.com/kb/1153/enabling-https/.
 
     tailscale_serve_enabled: false
     tailscale_serve_content: []
-    # You can specify multiple items to serve
-    # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples
+    # You can specify multiple items to serve.
+    # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples.
     # To serve simple static text
     #   - "http / text:'Hello, world!'"
 
