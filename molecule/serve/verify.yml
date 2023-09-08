@@ -4,7 +4,7 @@
 
   tasks:
     - name: Get tailscale serve status.
-      command: tailscale status
+      command: tailscale serve status
       changed_when: false
       register: tailscale_serve_status
 
