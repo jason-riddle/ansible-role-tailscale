@@ -6,7 +6,7 @@
   vars:
     tailscale_up_node: true
     tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_up_extra_args: "--accept-routes --hostname=github-actions-ts-serve-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
+    tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-serve-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
     tailscale_serve_enabled: true
     tailscale_serve_content:
       - "https / http://localhost:3000"
