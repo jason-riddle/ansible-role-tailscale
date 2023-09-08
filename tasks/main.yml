@@ -46,7 +46,7 @@
 - name: Run funnel for each port in tailscale_serve_funnel_ports_enabled.
   command: |
     tailscale funnel {{ item }} on
-  # tags:
-  #   - molecule-idempotence-notest
+  tags:
+    - molecule-idempotence-notest
   with_items: "{{ tailscale_serve_funnel_ports_enabled }}"
   when: tailscale_serve_funnel_enabled | bool
