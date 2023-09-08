@@ -31,10 +31,8 @@ tailscale_serve_enabled: false
 tailscale_serve_content: []
 # You can specify multiple items to serve
 # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples
-# Proxy requests to a web server at 127.0.0.1:3000
-#   - "https / http://127.0.0.1:3000"
 # To serve simple static text
-#   - "https:443 / text:'Hello, world!'"
+#   - "http / text:'Hello, world!'"
 
 # Configure /etc/default/tailscaled options.
 tailscale_default_options_enabled: false

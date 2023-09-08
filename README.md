@@ -59,10 +59,8 @@ See https://tailscale.com/kb/1153/enabling-https/.
     tailscale_serve_content: []
     # You can specify multiple items to serve
     # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples
-    # Proxy requests to a web server at 127.0.0.1:3000
-    #   - "https / http://127.0.0.1:3000"
     # To serve simple static text
-    #   - "https:443 / text:'Hello, world!'"
+    #   - "http / text:'Hello, world!'"
 
 **This feature is in beta. It may be removed or changed in a future release.**
 
@@ -147,7 +145,7 @@ See https://tailscale.com/kb/1242/tailscale-serve/.
     tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
     tailscale_serve_enabled: true
     tailscale_serve_content:
-      - "https:443 / text:'Hello, world!'"
+      - "http / text:'Hello, world!'"
 
   roles:
     - jason_riddle.tailscale
