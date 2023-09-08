@@ -9,7 +9,7 @@
     tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-serve-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
     tailscale_serve_enabled: true
     tailscale_serve_content:
-      - "https:443 / text:'Hello, world!'"
+      - "http / text:'Hello, world!'"
 
   pre_tasks:
     - name: Update apt cache.
