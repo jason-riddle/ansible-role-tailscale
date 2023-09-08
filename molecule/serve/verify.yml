@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: Get tailscale serve status.
+      command: tailscale status
+      changed_when: false
+      register: tailscale_serve_status
+
+    - name: Print tailscale serve status.
+      debug: var=tailscale_serve_status.stdout
+
+    - name: Get tailnet url.
+      shell: tailscale serve status | head -n 1 | cut -d' ' -f1
+      changed_when: false
+      register: tailscale_tailnet_url
+
+    - name: Print tailnet url.
+      debug: var=tailscale_tailnet_url.stdout
+
+    - name: Set tailnet_url fact.
+      set_fact:
+        tailnet_url: "{{ tailscale_tailnet_url.stdout }}"
+
+    - name: Verify tailscale is serving web requests.
+      uri:
+        url: "{{ tailnet_url }}"
+        status_code: 200
