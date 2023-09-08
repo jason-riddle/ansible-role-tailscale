@@ -1,0 +1,7 @@
+---
+- name: Serve each content item in tailscale_serve_content.
+  command: |
+    tailscale serve {{ item }}
+  with_items: "{{ tailscale_serve_content }}"
+  tags:
+    - molecule-idempotence-notest

@@ -34,3 +34,7 @@
 - name: Include cert.yml
   include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
+
+- name: Include serve.yml
+  include_tasks: serve.yml
+  when: tailscale_serve_enabled | bool
