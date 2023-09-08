@@ -55,6 +55,21 @@ Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
+    tailscale_serve_enabled: false
+    tailscale_serve_content: []
+    # You can specify multiple items to serve
+    # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples
+    # Proxy requests to a web server at 127.0.0.1:3000
+    #   - "https / http://127.0.0.1:3000"
+    # To serve simple static text
+    #   - "https:443 / text:'Hello, world!'"
+
+**This feature is in beta. It may be removed or changed in a future release.**
+
+Run `tailscale serve` with arguments.
+
+See https://tailscale.com/kb/1242/tailscale-serve/.
+
     tailscale_default_options_enabled: false
     tailscale_default_options_settings:
       # Allow caddy user to fetch cert.
@@ -114,6 +129,25 @@ See https://tailscale.com/kb/1153/enabling-https/.
       # See https://tailscale.com/kb/1190/caddy-certificates/#provide-non-root-users-with-access-to-fetch-certificate.
       - regexp: "^#?TS_PERMIT_CERT_UID"
         line: "TS_PERMIT_CERT_UID=\"caddy\""
+
+  roles:
+    - jason_riddle.tailscale
+```
+
+### (Beta Feature) Serve Content.
+
+See https://tailscale.com/kb/1242/tailscale-serve/.
+
+```yaml
+- hosts: all
+
+  vars:
+    tailscale_up_node: true
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_serve_enabled: true
+    tailscale_serve_content:
+      - "https:443 / text:'Hello, world!'"
 
   roles:
     - jason_riddle.tailscale
