@@ -27,7 +27,8 @@
       uri:
         url: "{{ tailnet_url }}"
         status_code: 200
+        return_content: true
       register: response
 
     - name: Print http response.
-      debug: var=response
+      debug: var=response.content
