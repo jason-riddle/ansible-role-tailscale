@@ -8,6 +8,7 @@ Features:
 - Install Tailscale.
 - Register Node to Tailnet.
 - (Beta Feature) Provision HTTPS certificates.
+- (Beta Feature) Serve Content.
 
 ## Requirements
 
