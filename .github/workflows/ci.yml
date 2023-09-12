@@ -62,17 +62,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - distro: debian10 # Buster
-            playbook: converge.yml
-          - distro: ubuntu1804 # Bionic Beaver
-            playbook: converge.yml
-          # TODO: Failed to get D-Bus connection: No such file or directory
-          # - distro: centos7
-          #   playbook: converge.yml
-          # TODO: Remove in future release.
-          # - distro: centos8
-          #   playbook: converge.yml
+        distro:
+          # TODO: Not found https://pkgs.tailscale.com/stable/rocky/8/tailscale.repo
+          # - rockylinux8
+          - ubuntu2004 # Focal Fossa
+          - ubuntu1804 # Bionic Beaver
+          - debian11 # Bullseye
+          - debian10 # Buster
 
     steps:
       - name: Check out the codebase.
@@ -86,7 +82,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip install -r requirements-dev.txt -c constraints-dev.txt
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
 
       - name: Set HOSTNAME.
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV

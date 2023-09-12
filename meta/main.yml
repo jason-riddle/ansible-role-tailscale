@@ -11,14 +11,17 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - buster # 10
+        - buster   # Debian 10
+        - bullseye # Debian 11
     - name: Ubuntu
       versions:
-        - bionic # 18.04
-    - name: EL
-      versions:
-        - 7
-        - 8
+        - bionic # Ubuntu 18.04
+        - focal  # Ubuntu 20.04
+    # TODO: Fix failing install
+    # - name: EL
+    #   versions:
+    #     - 7
+    #     - 8
   galaxy_tags:
     - system
     - tailscale

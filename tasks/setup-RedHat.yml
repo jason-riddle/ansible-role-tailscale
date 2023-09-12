@@ -1,5 +1,5 @@
 ---
-- name: Add tailscale repository.
+- name: Add tailscale yum repository.
   get_url:
     url: "{{ tailscale_yum_repository_url }}"
     dest: /etc/yum.repos.d/tailscale.repo
