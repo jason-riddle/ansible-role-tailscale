@@ -13,7 +13,7 @@
   ];
 
   enterShell = ''
-    pip install -r requirements-dev.txt
+    pip3 install ansible molecule molecule-plugins[docker] docker
   '';
 
   # https://devenv.sh/pre-commit-hooks/
