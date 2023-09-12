@@ -63,10 +63,11 @@ jobs:
     strategy:
       matrix:
         distro:
-          - rockylinux8
-          - ubuntu2004
+          # TODO: Not found https://pkgs.tailscale.com/stable/rocky/8/tailscale.repo
+          # - rockylinux8
+          - ubuntu2004 # Focal Fossa
           - ubuntu1804 # Bionic Beaver
-          - debian11
+          - debian11 # Bullseye
           - debian10 # Buster
 
     steps:
