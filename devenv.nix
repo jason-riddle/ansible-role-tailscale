@@ -13,7 +13,7 @@
   ];
 
   enterShell = ''
-    pip install -r requirements-dev.txt -c constraints-dev.txt
+    pip install -r requirements-dev.txt
   '';
 
   # https://devenv.sh/pre-commit-hooks/
