@@ -62,17 +62,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - distro: debian10 # Buster
-            playbook: converge.yml
-          - distro: ubuntu1804 # Bionic Beaver
-            playbook: converge.yml
-          # TODO: Failed to get D-Bus connection: No such file or directory
-          # - distro: centos7
-          #   playbook: converge.yml
-          # TODO: Remove in future release.
-          # - distro: centos8
-          #   playbook: converge.yml
+        distro:
+          - rockylinux8
+          - ubuntu2004
+          - ubuntu1804 # Bionic Beaver
+          - debian11
+          - debian10 # Buster
 
     steps:
       - name: Check out the codebase.
