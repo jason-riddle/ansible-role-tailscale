@@ -16,7 +16,7 @@
     url: "{{ tailscale_apt_gpg_key }}"
     state: present
 
-- name: Add tailscale repository.
+- name: Add tailscale apt repository.
   apt_repository:
     repo: "{{ tailscale_apt_repository }}"
     state: present
