@@ -9,6 +9,7 @@ Features:
 - Register Node to Tailnet.
 - (Beta Feature) Provision HTTPS certificates.
 - (Beta Feature) Serve Content.
+- (Beta Feature) Funnel.
 
 ## Requirements
 
@@ -161,6 +162,25 @@ See https://tailscale.com/kb/1242/tailscale-serve/.
     tailscale_serve_enabled: true
     tailscale_serve_content:
       - "http / text:'Hello, world!'"
+
+  roles:
+    - jason_riddle.tailscale
+```
+
+### (Beta Feature) Funnel.
+
+See https://tailscale.com/kb/1223/tailscale-funnel/.
+
+```yaml
+- hosts: all
+
+  vars:
+    tailscale_up_node: true
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
+    tailscale_funnel_enabled: true
+    tailscale_funnel_ports_enabled:
+      - 443
 
   roles:
     - jason_riddle.tailscale
