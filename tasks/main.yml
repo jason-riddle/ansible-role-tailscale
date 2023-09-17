@@ -38,3 +38,7 @@
 - name: Include serve.yml
   include_tasks: serve.yml
   when: tailscale_serve_enabled | bool
+
+- name: Include funnel.yml
+  include_tasks: funnel.yml
+  when: tailscale_funnel_enabled | bool
