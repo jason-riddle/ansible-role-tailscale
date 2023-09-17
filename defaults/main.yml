@@ -34,6 +34,15 @@ tailscale_serve_content: []
 # To serve simple static text
 #   - "http / text:'Hello, world!'"
 
+# Funnel options.
+tailscale_funnel_enabled: false
+tailscale_funnel_ports_enabled: []
+# You can funnel multiple ports.
+# See https://tailscale.com/kb/1223/tailscale-funnel and
+# https://tailscale.com/kb/1247/funnel-serve-use-cases for documentation and examples.
+# To funnel port 443
+#   - 443
+
 # Configure /etc/default/tailscaled options.
 tailscale_default_options_enabled: false
 tailscale_default_options_settings:

@@ -69,6 +69,20 @@ Run `tailscale serve` with arguments.
 
 See https://tailscale.com/kb/1242/tailscale-serve/.
 
+    tailscale_funnel_enabled: false
+    tailscale_funnel_ports_enabled: []
+    # You can funnel multiple ports.
+    # See https://tailscale.com/kb/1223/tailscale-funnel and
+    # https://tailscale.com/kb/1247/funnel-serve-use-cases for documentation and examples.
+    # To funnel port 443
+    #   - 443
+
+**This feature is in beta. It may be removed or changed in a future release.**
+
+Run `tailscale funnel` with arguments.
+
+See https://tailscale.com/kb/1223/tailscale-funnel/ and https://tailscale.com/kb/1247/funnel-serve-use-cases/.
+
     tailscale_default_options_enabled: false
     tailscale_default_options_settings:
       # Allow caddy user to fetch cert.
