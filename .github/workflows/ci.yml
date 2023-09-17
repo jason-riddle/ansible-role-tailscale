@@ -109,3 +109,11 @@ jobs:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
+      - name: Run Molecule funnel test.
+        run: |
+          molecule test --scenario-name funnel
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
