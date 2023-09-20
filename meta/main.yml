@@ -9,6 +9,9 @@ galaxy_info:
   license: "MIT"
   min_ansible_version: 2.4
   platforms:
+    - name: Fedora
+      versions:
+        - all
     - name: Debian
       versions:
         - buster   # Debian 10
@@ -17,10 +20,6 @@ galaxy_info:
       versions:
         - bionic # Ubuntu 18.04
         - focal  # Ubuntu 20.04
-    - name: EL
-      versions:
-        - 7
-        - 8
   galaxy_tags:
     - system
     - tailscale
