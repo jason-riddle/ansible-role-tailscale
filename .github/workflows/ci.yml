@@ -68,6 +68,7 @@ jobs:
           - ubuntu1804 # Bionic Beaver
           - debian11 # Bullseye
           - debian10 # Buster
+          - fedora34
 
     steps:
       - name: Check out the codebase.
