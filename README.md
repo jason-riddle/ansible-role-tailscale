@@ -8,8 +8,14 @@ Features:
 - Install Tailscale.
 - Register Node to Tailnet.
 - (Beta Feature) Provision HTTPS certificates.
+
+<!--
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
 - (Beta Feature) Serve Content.
 - (Beta Feature) Funnel.
+-->
 
 ## Requirements
 
@@ -57,6 +63,11 @@ Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
+<!--
+
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
     tailscale_serve_enabled: false
     tailscale_serve_content: []
     # You can specify multiple items to serve.
@@ -69,6 +80,9 @@ See https://tailscale.com/kb/1153/enabling-https/.
 Run `tailscale serve` with arguments.
 
 See https://tailscale.com/kb/1242/tailscale-serve/.
+
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
 
     tailscale_funnel_enabled: false
     tailscale_funnel_ports_enabled: []
@@ -83,6 +97,8 @@ See https://tailscale.com/kb/1242/tailscale-serve/.
 Run `tailscale funnel` with arguments.
 
 See https://tailscale.com/kb/1223/tailscale-funnel/ and https://tailscale.com/kb/1247/funnel-serve-use-cases/.
+
+-->
 
     tailscale_default_options_enabled: false
     tailscale_default_options_settings:
@@ -148,6 +164,11 @@ See https://tailscale.com/kb/1153/enabling-https/.
     - jason_riddle.tailscale
 ```
 
+<!--
+
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
 ### (Beta Feature) Serve Content.
 
 See https://tailscale.com/kb/1242/tailscale-serve/.
@@ -167,6 +188,9 @@ See https://tailscale.com/kb/1242/tailscale-serve/.
     - jason_riddle.tailscale
 ```
 
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
 ### (Beta Feature) Funnel.
 
 See https://tailscale.com/kb/1223/tailscale-funnel/.
@@ -185,6 +209,8 @@ See https://tailscale.com/kb/1223/tailscale-funnel/.
   roles:
     - jason_riddle.tailscale
 ```
+
+-->
 
 ## License
 

@@ -1,7 +1,10 @@
 ---
-- name: Funnel each port in tailscale_funnel_ports_enabled.
-  command: |
-    tailscale funnel {{ item }} on
-  tags:
-    - molecule-idempotence-notest
-  with_items: "{{ tailscale_funnel_ports_enabled }}"
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
+# - name: Funnel each port in tailscale_funnel_ports_enabled.
+#   command: |
+#     tailscale funnel {{ item }} on
+#   tags:
+#     - molecule-idempotence-notest
+#   with_items: "{{ tailscale_funnel_ports_enabled }}"

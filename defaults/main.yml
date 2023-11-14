@@ -27,6 +27,9 @@ tailscale_cert_filename: "{{ tailscale_cert_domain }}.crt"
 tailscale_cert_private_key_dir: "/usr/local/etc/ssl/private"
 tailscale_cert_private_key_filename: "{{ tailscale_cert_domain }}.key"
 
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
 # Serve options.
 tailscale_serve_enabled: false
 tailscale_serve_content: []
@@ -34,6 +37,9 @@ tailscale_serve_content: []
 # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples.
 # To serve simple static text
 #   - "http / text:'Hello, world!'"
+
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
 
 # Funnel options.
 tailscale_funnel_enabled: false

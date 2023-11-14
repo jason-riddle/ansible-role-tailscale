@@ -1,4 +1,7 @@
 ---
+# TODO: serve and funnel command line arguments have changed.
+# See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
 dependency:
   name: galaxy
 driver:
