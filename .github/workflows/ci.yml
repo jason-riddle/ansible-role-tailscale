@@ -101,18 +101,24 @@ jobs:
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
 
-      - name: Run Molecule serve test.
-        run: |
-          molecule test --scenario-name serve
-        env:
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+      # TODO: serve and funnel command line arguments have changed.
+      # See https://tailscale.com/blog/reintroducing-serve-funnel/.
 
-      - name: Run Molecule funnel test.
-        run: |
-          molecule test --scenario-name funnel
-        env:
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+      # - name: Run Molecule serve test.
+      #   run: |
+      #     molecule test --scenario-name serve
+      #   env:
+      #     MOLECULE_DISTRO: ${{ matrix.distro }}
+      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
+      # TODO: serve and funnel command line arguments have changed.
+      # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
+      # - name: Run Molecule funnel test.
+      #   run: |
+      #     molecule test --scenario-name funnel
+      #   env:
+      #     MOLECULE_DISTRO: ${{ matrix.distro }}
+      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
