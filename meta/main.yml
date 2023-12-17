@@ -17,11 +17,9 @@ galaxy_info:
       versions:
         - bionic # Ubuntu 18.04
         - focal  # Ubuntu 20.04
-    # TODO: Fix failing install
-    # - name: EL
-    #   versions:
-    #     - 7
-    #     - 8
+    - name: Fedora
+      versions:
+        - 38
   galaxy_tags:
     - system
     - tailscale
