@@ -64,6 +64,7 @@ jobs:
       matrix:
         distro:
           - rockylinux8
+          - fedora38
           - ubuntu2004 # Focal Fossa
           - ubuntu1804 # Bionic Beaver
           - debian11 # Bullseye

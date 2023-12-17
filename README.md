@@ -35,7 +35,9 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Apt repository options for Tailscale installation.
 
-    tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_major_version }}/tailscale.repo"
+    __ts_yum_centos_repo_url: "https://pkgs.tailscale.com/stable/centos/{{ ansible_distribution_major_version }}/tailscale.repo"
+    __ts_yum_fedora_repo_url: "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"
+    tailscale_yum_repository_url: "{{ (ansible_distribution == 'Fedora') | ternary(__ts_yum_fedora_repo_url, __ts_yum_centos_repo_url) }}"
 
 Yum repository options for Tailscale installation.
 
