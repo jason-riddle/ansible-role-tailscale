@@ -12,9 +12,14 @@ Features:
 <!--
 # TODO: serve and funnel command line arguments have changed.
 # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+-->
 
-- (Beta Feature) Serve Content.
-- (Beta Feature) Funnel.
+<!--
+TODO:
+
+Run One-off Commands:
+- tailscale serve (expose to the tailnet)
+- tailscale funnel (expose to the internet)
 -->
 
 ## Requirements
@@ -64,39 +69,58 @@ Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 See https://tailscale.com/kb/1153/enabling-https/.
 
 <!--
-
 # TODO: serve and funnel command line arguments have changed.
 # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+-->
 
-    tailscale_serve_enabled: false
-    tailscale_serve_content: []
-    # You can specify multiple items to serve.
-    # See https://tailscale.com/kb/1242/tailscale-serve/#examples for all examples.
-    # To serve simple static text
-    #   - "http / text:'Hello, world!'"
+<!--
+Manual Commands:
+-->
 
-**This feature is in beta. It may be removed or changed in a future release.**
+<!--
 
-Run `tailscale serve` with arguments.
+TODO: Expand on serve examples.
+
+Expose a port to the tailnet.
+
+```
+tailscale serve 3000
+tailscale serve --bg 3000
+tailscale serve /path/to/file.html
+tailscale serve http://localhost:3000
+tailscale serve localhost:3000/foo
+tailscale serve --https=8443 3000
+tailscale serve --tcp=2222 22
+#
+```
 
 See https://tailscale.com/kb/1242/tailscale-serve/.
 
+-->
+
+<!--
 # TODO: serve and funnel command line arguments have changed.
 # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+-->
 
-    tailscale_funnel_enabled: false
-    tailscale_funnel_ports_enabled: []
-    # You can funnel multiple ports.
-    # See https://tailscale.com/kb/1223/tailscale-funnel and
-    # https://tailscale.com/kb/1247/funnel-serve-use-cases for documentation and examples.
-    # To funnel port 443
-    #   - 443
+<!--
 
-**This feature is in beta. It may be removed or changed in a future release.**
+TODO: Expand on funnel examples.
 
-Run `tailscale funnel` with arguments.
+Expose a port to the internet.
 
-See https://tailscale.com/kb/1223/tailscale-funnel/ and https://tailscale.com/kb/1247/funnel-serve-use-cases/.
+```
+tailscale funnel 3000
+tailscale funnel --bg 3000
+tailscale funnel /path/to/file.html
+tailscale funnel http://localhost:3000
+tailscale funnel localhost:3000/foo
+tailscale funnel --https=8443 3000
+tailscale funnel --tcp=2222 22
+#
+```
+
+See https://tailscale.com/kb/1223/tailscale-funnel/.
 
 -->
 
