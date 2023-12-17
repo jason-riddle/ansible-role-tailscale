@@ -34,17 +34,3 @@
 - name: Include cert.yml
   include_tasks: cert.yml
   when: tailscale_cert_enabled | bool
-
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
-
-# - name: Include serve.yml
-#   include_tasks: serve.yml
-#   when: tailscale_serve_enabled | bool
-
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
-
-# - name: Include funnel.yml
-#   include_tasks: funnel.yml
-#   when: tailscale_funnel_enabled | bool
