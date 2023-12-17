@@ -65,10 +65,10 @@ jobs:
         distro:
           - rockylinux8
           - fedora38
-          # - ubuntu2004 # Focal Fossa
-          # - ubuntu1804 # Bionic Beaver
-          # - debian11 # Bullseye
-          # - debian10 # Buster
+          - ubuntu2004 # Focal Fossa
+          - ubuntu1804 # Bionic Beaver
+          - debian11 # Bullseye
+          - debian10 # Buster
 
     steps:
       - name: Check out the codebase.
