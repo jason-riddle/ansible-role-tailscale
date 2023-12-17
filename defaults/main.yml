@@ -4,8 +4,9 @@ tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distributio
 tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 
 # Used only for RedHat/CentOS/Fedora.
-# TODO: Use ternary "{{ (ansible_distribution == 'Fedora') | ternary('fedora', 'centos') }}" to determine distribution?
-tailscale_yum_repository_url: "https://pkgs.tailscale.com/stable/centos/{{ ansible_distribution_major_version }}/tailscale.repo"
+__ts_yum_centos_repo_url: "https://pkgs.tailscale.com/stable/centos/{{ ansible_distribution_major_version }}/tailscale.repo"
+__ts_yum_fedora_repo_url: "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"
+tailscale_yum_repository_url: "{{ (ansible_distribution == 'Fedora') | ternary(__ts_yum_fedora_repo_url, __ts_yum_centos_repo_url) }}"
 
 # Service options.
 tailscale_service_name: "tailscaled"
