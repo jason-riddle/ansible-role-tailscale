@@ -9,6 +9,12 @@
     tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-up-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:
+    - name: Assert that tailscale_up_authkey is not empty.
+      assert:
+        that:
+          - tailscale_up_authkey | length > 0
+        quiet: true
+
     - name: Update apt cache.
       apt: update_cache=true cache_valid_time=600
       changed_when: false
