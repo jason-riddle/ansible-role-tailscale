@@ -11,7 +11,7 @@
       - tailscale_up_timeout | length > 0
     quiet: true
 
-- name: Run tailscale up and join tailnet.
+- name: Run tailscale up.
   command: |
     tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
   tags:
