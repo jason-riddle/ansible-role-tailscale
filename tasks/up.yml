@@ -15,6 +15,7 @@
   command: |
     tailscale status --json
   register: tailscale_status_before_up
+  changed_when: false
 
 - name: Run tailscale up.
   command: |
