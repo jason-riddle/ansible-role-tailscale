@@ -22,3 +22,20 @@
   tags:
     - molecule-idempotence-notest
   no_log: "{{ tailscale_up_no_log }}"
+
+# TODO: Still working on this. Logic seems fine, but comments need some work.
+#
+# In the previous version of up, the up command was running, but tailscale was always reporting a change.
+# In this new version, we compare the output of the `Self` field from the previous status and from running status right after running up.
+# So, if there is a difference, then something has changed and tailscale should mark this task as having changed in the playbook summary.
+# If nothing has changed, then this will be shown as not having changed.
+#
+# Also, In order to compare the stdouts of both status commands, send the stdout of tailscale up to stderr.
+# So if there was an issue running up, the stderr can be inspected.
+# - name: Run tailscale up | V2.
+#   shell: |
+#     >&2 tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
+#     tailscale status --json
+#   no_log: "{{ tailscale_up_no_log }}"
+#   register: tailscale_status_after_up
+#   changed_when: (tailscale_status_before_up.stdout | from_json).Self != (tailscale_status_after_up.stdout | from_json).Self
