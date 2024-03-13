@@ -17,6 +17,7 @@
   register: tailscale_status_before_up
   changed_when: false
 
+# Up - V1
 - name: Run tailscale up.
   command: |
     tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
@@ -33,7 +34,9 @@
 #
 # Also, In order to compare the stdouts of both status commands, send the stdout of tailscale up to stderr.
 # So if there was an issue running up, the stderr can be inspected.
-# - name: Run tailscale up | V2.
+#
+# Up - V2
+# - name: Run tailscale up.
 #   shell: |
 #     >&2 tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
 #     tailscale status --json
