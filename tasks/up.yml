@@ -18,12 +18,12 @@
   changed_when: false
 
 # Up - V1
-- name: Run tailscale up.
-  command: |
-    tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
-  tags:
-    - molecule-idempotence-notest
-  no_log: "{{ tailscale_up_no_log }}"
+# - name: Run tailscale up.
+#   command: |
+#     tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
+#   tags:
+#     - molecule-idempotence-notest
+#   no_log: "{{ tailscale_up_no_log }}"
 
 # TODO: Still working on this. Logic seems fine, but comments need some work.
 #
@@ -36,10 +36,10 @@
 # So if there was an issue running up, the stderr can be inspected.
 #
 # Up - V2
-# - name: Run tailscale up.
-#   shell: |
-#     >&2 tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
-#     tailscale status --json
-#   no_log: "{{ tailscale_up_no_log }}"
-#   register: tailscale_status_after_up
-#   changed_when: (tailscale_status_before_up.stdout | from_json).Self != (tailscale_status_after_up.stdout | from_json).Self
+- name: Run tailscale up.
+  shell: |
+    >&2 tailscale up --authkey="{{ tailscale_up_authkey }}" --timeout="{{ tailscale_up_timeout }}" {{ tailscale_up_extra_args }}
+    tailscale status --json
+  no_log: "{{ tailscale_up_no_log }}"
+  register: tailscale_status_after_up
+  changed_when: (tailscale_status_before_up.stdout | from_json).Self != (tailscale_status_after_up.stdout | from_json).Self
