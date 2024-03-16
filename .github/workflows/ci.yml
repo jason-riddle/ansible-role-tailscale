@@ -111,7 +111,7 @@ jobs:
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          TAILSCALE_OAUTHKEY_AND_ARGS: "${{ secrets.TAILSCALE_OAUTHKEY_AND_ARGS }}"
+          TAILSCALE_OAUTHKEY: "${{ secrets.TAILSCALE_OAUTHKEY }}"
 
       # TODO: serve and funnel command line arguments have changed.
       # See https://tailscale.com/blog/reintroducing-serve-funnel/.

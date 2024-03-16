@@ -6,9 +6,10 @@
   vars:
     tailscale_up_node: true
     # tailscale_up_no_log: false
-    # TAILSCALE_OAUTHKEY_AND_ARGS=tskey-client-xxxx?ephemeral=true&preauthorized=false&baseURL=https://api.tailscale.com
+    # TAILSCALE_OAUTHKEY=tskey-client-xxxx
     # Permissions: devices:write
-    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTHKEY_AND_ARGS') }}"
+    # tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTHKEY') }}?ephemeral=true&preauthorized=false&baseURL=https://api.tailscale.com"
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTHKEY') }}"
     tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-up-with-oauth-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:
