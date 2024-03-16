@@ -5,13 +5,13 @@
 
   vars:
     tailscale_up_node: true
-    # ENVS: TAILSCALE_AUTHKEY=tskey-auth-xxxx
-    # CRED: https://login.tailscale.com/admin/settings/keys
+    # ENVS: TAILSCALE_OAUTHKEY=tskey-client-xxxx
+    # CRED: https://login.tailscale.com/admin/settings/oauth
     # NAME: github-actions-ansible-role-tailscale
-    # TYPE: Reusable, Ephemeral
+    # PERM: devices:write
     # TAGS: tag:github-action
-    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-up-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTHKEY') }}"
+    tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-up-with-oauth-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:
     - name: Assert that tailscale_up_authkey is not empty.
