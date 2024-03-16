@@ -7,7 +7,11 @@
 Features:
 - Install Tailscale.
 - Register Node to Tailnet.
-- (Beta Feature) Provision HTTPS certificates.
+<!--
+HTTPS certificates are now generally available as of December 20, 2023.
+See: https://tailscale.com/changelog#2023-12-20-service
+-->
+- Provision HTTPS certificates.
 
 <!--
 # TODO: serve and funnel command line arguments have changed.
@@ -64,8 +68,10 @@ See https://tailscale.com/kb/1080/cli/#up.
     tailscale_cert_private_key_dir: "/usr/local/etc/ssl/private"
     tailscale_cert_private_key_filename: "{{ tailscale_cert_domain }}.key"
 
-**This feature is in beta. It may be removed or changed in a future release.**
-
+<!--
+HTTPS certificates are now generally available as of December 20, 2023.
+See: https://tailscale.com/changelog#2023-12-20-service
+-->
 Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
@@ -165,7 +171,11 @@ None.
     - jason_riddle.tailscale
 ```
 
-### (Beta Feature) Provision HTTPS certificates.
+<!--
+HTTPS certificates are now generally available as of December 20, 2023.
+See: https://tailscale.com/changelog#2023-12-20-service
+-->
+### Provision HTTPS certificates.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
