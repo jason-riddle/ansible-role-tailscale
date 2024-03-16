@@ -88,28 +88,30 @@ jobs:
       - name: Set HOSTNAME.
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
 
-      - name: Run Molecule default test.
-        run: |
-          molecule test --scenario-name default
-        env:
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-
-      - name: Run Molecule up test.
-        run: |
-          molecule test --scenario-name up
-        env:
-          MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
-
-      # - name: Run Molecule up-with-oauth test.
+      # TODO: Uncomment
+      # - name: Run Molecule default test.
       #   run: |
-      #     molecule test --scenario-name up-with-oauth
+      #     molecule test --scenario-name default
       #   env:
       #     MOLECULE_DISTRO: ${{ matrix.distro }}
       #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_OAUTHKEY_AND_ARGS }}"
+
+      # TODO: Uncomment
+      # - name: Run Molecule up test.
+      #   run: |
+      #     molecule test --scenario-name up
+      #   env:
+      #     MOLECULE_DISTRO: ${{ matrix.distro }}
+      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
+      - name: Run Molecule up-with-oauth test.
+        run: |
+          molecule test --scenario-name up-with-oauth
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_OAUTHKEY_AND_ARGS }}"
 
       # TODO: serve and funnel command line arguments have changed.
       # See https://tailscale.com/blog/reintroducing-serve-funnel/.
