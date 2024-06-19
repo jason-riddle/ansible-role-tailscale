@@ -84,8 +84,8 @@ jobs:
 
       - name: Install test dependencies.
         # See: https://github.com/docker/docker-py/issues/3256
-        # 2024-05-31 requests==2.32.0 is not compatible with docker-py
-        # Review by 2024-11-15
+        # 2024-05-31 requests==2.32.0 is not compatible with docker-py, pinning to requests==2.31.0.
+        # Revisit again by 2024-11-15.
         run: pip3 install ansible molecule molecule-plugins[docker] docker requests==2.31.0
 
       - name: Set HOSTNAME.
