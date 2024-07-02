@@ -65,13 +65,22 @@ jobs:
         distro:
           # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
           # - rockylinux8
+
           # TODO: Unable to install.
           # - fedora38
+
+          # See: https://en.wikipedia.org/wiki/Ubuntu_version_history
+          # - ubuntu2404 # Noble Numbat
+          - ubuntu2204 # Jammy Jellyfish
           - ubuntu2004 # Focal Fossa
           # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
           # - ubuntu1804 # Bionic Beaver
-          - debian11 # Bullseye
-          - debian10 # Buster
+
+          # See: https://en.wikipedia.org/wiki/Debian_version_history
+          # - debian13 # Trixie
+          - debian12 # Bookworm
+          # - debian11 # Bullseye
+          # - debian10 # Buster
 
     steps:
       - name: Check out the codebase.
