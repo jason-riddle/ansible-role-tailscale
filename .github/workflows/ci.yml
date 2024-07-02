@@ -85,13 +85,13 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
 
-      - name: Print versions.
+      - name: Print python3 version.
         run: |
           python3 --version
+
+      - name: Print ansible version.
+        run: |
           ansible --version
-          pip show ansible
-          pip show docker
-          pip show molecule
 
       - name: Set HOSTNAME.
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
