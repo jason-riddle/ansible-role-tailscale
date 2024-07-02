@@ -65,7 +65,7 @@ jobs:
         distro:
           # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
           # - rockylinux8
-          
+
           # TODO: Unable to install.
           # - fedora38
 
