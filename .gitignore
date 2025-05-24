@@ -5,3 +5,9 @@
 .devenv
 .devenv.flake.nix
 .venv
+
+.claude/settings.local.json
+
+.aider.chat.*
+.aider.input.*
+.aider.tags.*
