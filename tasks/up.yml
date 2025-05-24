@@ -30,15 +30,14 @@
 #     - molecule-idempotence-notest
 #   no_log: "{{ tailscale_up_no_log }}"
 
-# TODO: Still working on this. Logic seems fine, but comments need some work.
+# Improved version that properly detects changes by comparing tailscale status before and after.
 #
-# In the previous version of up, the up command was running, but tailscale was always reporting a change.
-# In this new version, we compare the output of the `Self` field from the previous status and from running status right after running up.
-# So, if there is a difference, then something has changed and tailscale should mark this task as having changed in the playbook summary.
-# If nothing has changed, then this will be shown as not having changed.
+# The previous version always reported changes even when tailscale was already connected.
+# This version compares BackendState, UserID, and TailscaleIPs from before/after status to determine
+# if the up command actually changed the tailscale state.
 #
-# Also, In order to compare the stdouts of both status commands, send the stdout of tailscale up to stderr.
-# So if there was an issue running up, the stderr can be inspected.
+# The up command output is redirected to stderr so any errors can be inspected while
+# allowing status JSON to be captured in stdout for comparison.
 #
 # Up - V2
 - name: Run tailscale up.
