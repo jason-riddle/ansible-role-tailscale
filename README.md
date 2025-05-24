@@ -13,18 +13,6 @@ See: https://tailscale.com/changelog#2023-12-20-service
 -->
 - Provision HTTPS certificates.
 
-<!--
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
--->
-
-<!--
-TODO:
-
-Run One-off Commands:
-- tailscale serve (expose to the tailnet)
-- tailscale funnel (expose to the internet)
--->
 
 ## Requirements
 
@@ -80,61 +68,13 @@ Run `tailscale cert` with arguments. `tailscale_cert_domain` must be set.
 
 See https://tailscale.com/kb/1153/enabling-https/.
 
-<!--
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
--->
 
 <!--
 Manual Commands:
 -->
 
-<!--
 
-TODO: Expand on serve examples.
 
-Expose a port to the tailnet.
-
-```
-tailscale serve 3000
-tailscale serve --bg 3000
-tailscale serve /path/to/file.html
-tailscale serve http://localhost:3000
-tailscale serve localhost:3000/foo
-tailscale serve --https=8443 3000
-tailscale serve --tcp=2222 22
-#
-```
-
-See https://tailscale.com/kb/1242/tailscale-serve/.
-
--->
-
-<!--
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
--->
-
-<!--
-
-TODO: Expand on funnel examples.
-
-Expose a port to the internet.
-
-```
-tailscale funnel 3000
-tailscale funnel --bg 3000
-tailscale funnel /path/to/file.html
-tailscale funnel http://localhost:3000
-tailscale funnel localhost:3000/foo
-tailscale funnel --https=8443 3000
-tailscale funnel --tcp=2222 22
-#
-```
-
-See https://tailscale.com/kb/1223/tailscale-funnel/.
-
--->
 
     tailscale_default_options_enabled: false
     tailscale_default_options_settings:
@@ -204,53 +144,6 @@ See https://tailscale.com/kb/1153/enabling-https/.
     - jason_riddle.tailscale
 ```
 
-<!--
-
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
-
-### (Beta Feature) Serve Content.
-
-See https://tailscale.com/kb/1242/tailscale-serve/.
-
-```yaml
-- hosts: all
-
-  vars:
-    tailscale_up_node: true
-    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
-    tailscale_serve_enabled: true
-    tailscale_serve_content:
-      - "http / text:'Hello, world!'"
-
-  roles:
-    - jason_riddle.tailscale
-```
-
-# TODO: serve and funnel command line arguments have changed.
-# See https://tailscale.com/blog/reintroducing-serve-funnel/.
-
-### (Beta Feature) Funnel.
-
-See https://tailscale.com/kb/1223/tailscale-funnel/.
-
-```yaml
-- hosts: all
-
-  vars:
-    tailscale_up_node: true
-    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
-    tailscale_up_extra_args: "--hostname={{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}"
-    tailscale_funnel_enabled: true
-    tailscale_funnel_ports_enabled:
-      - 443
-
-  roles:
-    - jason_riddle.tailscale
-```
-
--->
 
 ## License
 
