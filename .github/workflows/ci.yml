@@ -59,9 +59,12 @@ jobs:
 
   molecule:
     name: Molecule
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
+        runner:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
         distro:
           # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
           # - rockylinux8
