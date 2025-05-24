@@ -35,7 +35,6 @@ defaults:
     working-directory: 'jason_riddle.tailscale'
 
 jobs:
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
