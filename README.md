@@ -61,6 +61,10 @@ Run `tailscale up` with arguments. `tailscale_up_authkey` must be set.
 
 See https://tailscale.com/kb/1080/cli/#up.
 
+    tailscale_debug: false
+
+Controls whether debug tasks output information during role execution. When `true`, enables debug output for troubleshooting.
+
     tailscale_cert_enabled: false
     tailscale_cert_domain: ""
     tailscale_cert_dir: "/usr/local/etc/ssl/certs"
