@@ -20,6 +20,9 @@ tailscale_up_timeout: "30s"
 tailscale_up_extra_args: ""
 tailscale_up_no_log: true
 
+# Debug options.
+tailscale_debug: false
+
 # Cert options.
 tailscale_cert_enabled: false
 tailscale_cert_domain: ""

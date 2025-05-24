@@ -5,6 +5,7 @@
 
   vars:
     tailscale_up_node: true
+    tailscale_up_no_log: false
     # ENVS: TAILSCALE_AUTHKEY=tskey-auth-xxxx
     # CRED: https://login.tailscale.com/admin/settings/keys
     # NAME: github-actions-ansible-role-tailscale

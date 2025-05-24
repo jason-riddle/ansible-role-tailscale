@@ -17,6 +17,11 @@
   register: tailscale_status_before_up
   changed_when: false
 
+- name: Display tailscale status before up.
+  debug:
+    var: tailscale_status_before_up.stdout
+  when: tailscale_debug
+
 # Up - V1
 # - name: Run tailscale up.
 #   command: |
@@ -43,3 +48,8 @@
   no_log: "{{ tailscale_up_no_log }}"
   register: tailscale_status_after_up
   changed_when: (tailscale_status_before_up.stdout | from_json).Self != (tailscale_status_after_up.stdout | from_json).Self
+
+- name: Display tailscale status after up.
+  debug:
+    var: tailscale_status_after_up.stdout
+  when: tailscale_debug
