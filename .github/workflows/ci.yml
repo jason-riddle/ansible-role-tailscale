@@ -73,8 +73,8 @@ jobs:
 
           # See: https://en.wikipedia.org/wiki/Ubuntu_version_history
           # - ubuntu2404 # Noble Numbat
-          - ubuntu2204 # Jammy Jellyfish
-          - ubuntu2004 # Focal Fossa
+          # - ubuntu2204 # Jammy Jellyfish
+          # - ubuntu2004 # Focal Fossa
           # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
           # - ubuntu1804 # Bionic Beaver
 
