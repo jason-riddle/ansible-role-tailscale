@@ -51,6 +51,11 @@
     (tailscale_status_before_up.stdout | from_json).BackendState != (tailscale_status_after_up.stdout | from_json).BackendState or
     (tailscale_status_before_up.stdout | from_json).Self.UserID != (tailscale_status_after_up.stdout | from_json).Self.UserID or
     (tailscale_status_before_up.stdout | from_json).Self.TailscaleIPs != (tailscale_status_after_up.stdout | from_json).Self.TailscaleIPs
+  failed_when: >
+    (tailscale_status_after_up.stdout | from_json).BackendState == "NoState" or
+    (tailscale_status_after_up.stdout | from_json).BackendState == "NeedsLogin" or
+    (tailscale_status_after_up.stdout | from_json).BackendState == "NeedsMachineAuth" or
+    (tailscale_status_after_up.stdout | from_json).BackendState == "Stopped"
 
 - name: Display tailscale status after up.
   debug:
