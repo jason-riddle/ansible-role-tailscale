@@ -1,3 +1,4 @@
+---
 name: Claude Code
 
 on:
@@ -34,4 +35,3 @@ jobs:
         uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-
