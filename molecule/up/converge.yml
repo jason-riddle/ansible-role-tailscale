@@ -5,6 +5,7 @@
 
   vars:
     tailscale_up_node: true
+    tailscale_up_log: true
     tailscale_debug: true
     # ENVS: TAILSCALE_AUTHKEY=tskey-auth-xxxx
     # CRED: https://login.tailscale.com/admin/settings/keys
