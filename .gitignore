@@ -5,3 +5,5 @@
 .devenv
 .devenv.flake.nix
 .venv
+
+.claude/settings.local.json
