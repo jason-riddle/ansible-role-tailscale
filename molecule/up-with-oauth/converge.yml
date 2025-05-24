@@ -5,12 +5,14 @@
 
   vars:
     tailscale_up_node: true
-    # ENVS: TAILSCALE_OAUTHKEY=tskey-client-xxxx
+    tailscale_up_log: true
+    tailscale_debug: true
+    # ENVS: TAILSCALE_OAUTH_CLIENT_SECRET=tskey-client-xxxx
     # CRED: https://login.tailscale.com/admin/settings/oauth
-    # NAME: github-actions-ansible-role-tailscale
-    # PERM: devices:write
+    # NAME: github-actions-ansible-role-tailscale-ouath
+    # PERM: Keys > Auth Keys > Write
     # TAGS: tag:github-action
-    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTHKEY') }}"
+    tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTH_CLIENT_SECRET') }}?ephemeral=true&preauthorized=true"
     tailscale_up_extra_args: "--accept-routes --hostname=gh-actions-ts-up-with-oauth-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:

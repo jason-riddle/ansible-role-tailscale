@@ -124,14 +124,13 @@ jobs:
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
           TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
 
-      # TODO: Not working..
-      # - name: Run Molecule up-with-oauth test.
-      #   run: |
-      #     molecule test --scenario-name up-with-oauth
-      #   env:
-      #     MOLECULE_DISTRO: ${{ matrix.distro }}
-      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-      #     TAILSCALE_OAUTHKEY: "${{ secrets.TAILSCALE_OAUTHKEY }}"
+      - name: Run Molecule up-with-oauth test.
+        run: |
+          molecule test --scenario-name up-with-oauth
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}"
 
       # TODO: serve and funnel command line arguments have changed.
       # See https://tailscale.com/blog/reintroducing-serve-funnel/.

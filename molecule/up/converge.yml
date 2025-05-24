@@ -9,7 +9,7 @@
     tailscale_debug: true
     # ENVS: TAILSCALE_AUTHKEY=tskey-auth-xxxx
     # CRED: https://login.tailscale.com/admin/settings/keys
-    # NAME: github-actions-ansible-role-tailscale
+    # NAME: github-actions-ansible-role-tailscale-authkey
     # TYPE: Reusable, Ephemeral
     # TAGS: tag:github-action
     tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
