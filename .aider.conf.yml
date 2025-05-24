@@ -1,0 +1,53 @@
+---
+##########################################################
+# .aider.conf.yml
+# This file lists *all* the valid configuration entries.
+# Place in your home dir, or at the root of your git repo.
+##########################################################
+
+# Note: You can only put OpenAI and Anthropic API keys in the yaml
+# config file. Keys for all APIs can be stored in a .env file
+# https://aider.chat/docs/config/dotenv.html
+
+#############
+# Main model:
+
+## Specify the model to use for the main chat
+model: anthropic/claude-3-7-sonnet-20250219
+
+#################
+# Model settings:
+
+## Use architect edit format for the main chat
+architect: true
+
+## Specify the model to use for editor tasks (default depends on --model)
+editor-model: openai/gpt-4o-mini
+
+###############
+# Git settings:
+
+## Enable/disable auto commit of LLM changes (default: True)
+auto-commits: false
+
+#################
+# Other settings:
+
+## specify a file to edit (can be used multiple times)
+
+# file:
+#   - main.go
+
+## specify a read-only file (can be used multiple times)
+
+# read:
+#   - main.go
+
+## Enable/disable terminal bell notifications when LLM responses are ready (default: False)
+notifications: true
+
+## Specify a command to run for notifications instead of the terminal bell. If not specified, a default command for your OS may be used.
+notifications-command: "command -v say >/dev/null 2>&1 && say 'Aider is ready' || (command -v festival >/dev/null 2>&1 && echo 'Aider is ready' | festival --tts)"
+
+## Enable/disable detection and offering to add URLs to chat (default: True)
+detect-urls: false
