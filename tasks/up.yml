@@ -47,7 +47,10 @@
     tailscale status --json
   no_log: "{{ tailscale_up_no_log }}"
   register: tailscale_status_after_up
-  changed_when: (tailscale_status_before_up.stdout | from_json).Self != (tailscale_status_after_up.stdout | from_json).Self
+  changed_when: >
+    (tailscale_status_before_up.stdout | from_json).BackendState != (tailscale_status_after_up.stdout | from_json).BackendState or
+    (tailscale_status_before_up.stdout | from_json).Self.UserID != (tailscale_status_after_up.stdout | from_json).Self.UserID or
+    (tailscale_status_before_up.stdout | from_json).Self.TailscaleIPs != (tailscale_status_after_up.stdout | from_json).Self.TailscaleIPs
 
 - name: Display tailscale status after up.
   debug:
