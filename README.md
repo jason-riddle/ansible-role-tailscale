@@ -24,7 +24,9 @@ This role supports OpenID Connect (OIDC) authentication for GitHub Actions, elim
 - ✅ Enhanced security with fine-grained access control
 - ✅ Zero maintenance - no more expired auth key failures
 
-**Setup Guide:** See [docs/OIDC_SETUP.md](docs/OIDC_SETUP.md) for complete configuration instructions.
+**Quick Start:** See [docs/QUICKSTART.md](docs/QUICKSTART.md) for 5-minute setup.
+
+**Complete Guide:** See [docs/OIDC_SETUP.md](docs/OIDC_SETUP.md) for detailed configuration instructions.
 
 ## Requirements
 
