@@ -1,5 +1,5 @@
 ---
-# Example: Using Tailscale with OIDC Authentication in GitHub Actions
+# Example: Tailscale OIDC Authentication with Auth Key Generation
 #
 # This workflow demonstrates how to use OIDC (OpenID Connect) to automatically
 # generate Tailscale auth keys without storing long-lived secrets.
@@ -12,7 +12,7 @@
 #
 # For complete setup instructions, see: .github/docs/OIDC_SETUP.md
 
-name: Example OIDC Workflow
+name: Example - OIDC with Auth Key
 
 on:
   workflow_dispatch:  # Manual trigger for testing
@@ -90,11 +90,3 @@ jobs:
           echo "You can now use it in your Ansible playbook"
         env:
           TAILSCALE_AUTHKEY: ${{ steps.generate_authkey.outputs.key }}
-
-      # Alternative: Use with Tailscale GitHub Action
-      - name: Connect to Tailscale (using official action)
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
-          oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
-          tags: tag:github-actions
