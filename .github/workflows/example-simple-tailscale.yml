@@ -35,6 +35,12 @@ jobs:
           oauth-secret: ${{ secrets.TS_V2_OIDC_AUDIENCE }}
           tags: tag:github-actions
 
+      - name: Verify Tailscale connection
+        run: |
+          echo "✅ Successfully connected to Tailscale!"
+          tailscale status --peers=false
+          echo "IP: $(tailscale ip -4)"
+
       - name: Test Tailscale Connection
         run: |
           echo "🔗 Connected to Tailscale network!"
