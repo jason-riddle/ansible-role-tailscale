@@ -1,0 +1,47 @@
+---
+# Example: Simplified Tailscale Action with OIDC
+#
+# This workflow demonstrates the simplest way to use the Tailscale GitHub Action
+# with OIDC authentication - no curl commands, just the action.
+#
+# Prerequisites:
+# 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
+# 2. Set repository secrets:
+#    - TS_V2_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
+#    - TS_V2_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
+#
+# For complete setup instructions, see: .github/docs/OIDC_SETUP.md
+
+name: Example Simple Tailscale Action
+
+on:
+  workflow_dispatch:  # Manual trigger for testing
+
+permissions:
+  contents: read      # Required for actions/checkout
+  id-token: write     # Required for OIDC token generation
+
+jobs:
+  simple-tailscale-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Connect to Tailscale Network
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_V2_OIDC_AUDIENCE }}
+          tags: tag:github-actions
+
+      - name: Test Tailscale Connection
+        run: |
+          echo "🔗 Connected to Tailscale network!"
+          tailscale status --json | jq '.User, .Tailnet, .Self.IPs'
+
+      - name: Your CI/CD Steps Here
+        run: |
+          # Add your application deployment, testing, or other CI/CD steps
+          echo "🚀 Ready for your CI/CD pipeline!"
+          echo "This machine is now part of your Tailscale network."
