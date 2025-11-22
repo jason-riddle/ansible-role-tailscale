@@ -67,6 +67,11 @@ jobs:
           echo "::add-mask::$ACCESS_TOKEN"
 
       # Step 3: Generate Tailscale auth key
+      # Note: This generates a reusable, ephemeral auth key for CI usage:
+      # - reusable: true - allows multiple CI runs to use the same key until expiry
+      # - ephemeral: true - devices are automatically removed when disconnected
+      # - expirySeconds: 604800 (7 days) - matches the weekly refresh schedule
+      # - tags: ["tag:github-actions"] - no "tag:untrusted" as this is for CI, not untrusted devices
       - name: Generate Tailscale auth key
         id: generate_authkey
         run: |
@@ -94,7 +99,6 @@ jobs:
           fi
           echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
           echo "::add-mask::$AUTH_KEY"
-        # Note: expirySeconds is set to 604800 (7 days) to match the weekly refresh schedule
 
       # Step 4: Update GitHub repository secret
       - name: Update TAILSCALE_AUTHKEY secret
