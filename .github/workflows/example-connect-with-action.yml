@@ -1,8 +1,8 @@
 ---
-# Example: Tailscale OIDC Authentication with Auth Key Generation
+# Example: Connect to Tailscale via GitHub Action with OIDC
 #
-# This workflow demonstrates how to use OIDC (OpenID Connect) to automatically
-# generate Tailscale auth keys without storing long-lived secrets.
+# This workflow demonstrates how to use the Tailscale GitHub Action to connect
+# to your Tailscale network using OIDC (OpenID Connect) authentication.
 #
 # Prerequisites:
 # 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
@@ -12,7 +12,7 @@
 #
 # For complete setup instructions, see: .github/docs/OIDC_SETUP.md
 
-name: Example - OIDC with Auth Key
+name: Example - Connect via Tailscale Action
 
 on:
   workflow_dispatch:  # Manual trigger for testing
@@ -22,7 +22,7 @@ permissions:
   id-token: write     # Required for OIDC token generation
 
 jobs:
-  tailscale-oidc-example:
+  connect-to-tailscale:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -53,40 +53,24 @@ jobs:
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$ACCESS_TOKEN"
 
-      # Step 3: Generate ephemeral Tailscale auth key
-      - name: Generate ephemeral Tailscale auth key
-        id: generate_authkey
-        run: |
-          RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/tailnet/-/keys \
-            -H "Authorization: Bearer ${{ steps.get_ts_api_token.outputs.access_token }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "capabilities": {
-                "devices": {
-                  "create": {
-                    "reusable": false,
-                    "ephemeral": true,
-                    "preauthorized": true,
-                    "tags": ["tag:github-actions"]
-                  }
-                }
-              },
-              "expirySeconds": 3600
-            }')
-          AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
-          if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
-            echo "Failed to generate auth key. Check API token permissions and Tailscale ACL configuration."
-            exit 1
-          fi
-          echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
-          echo "::add-mask::$AUTH_KEY"
+      # Step 3: Connect to Tailscale using GitHub Action
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
+          oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
+          tags: tag:github-actions
 
-      # Step 4: Use the generated auth key with your Ansible role
-      - name: Run ansible playbook with Tailscale
+      # Step 4: Verify connection
+      - name: Verify Tailscale connection
         run: |
-          # Your ansible playbook execution here
-          # The TAILSCALE_AUTHKEY is available as an environment variable
-          echo "Auth key successfully generated!"
-          echo "You can now use it in your Ansible playbook"
-        env:
-          TAILSCALE_AUTHKEY: ${{ steps.generate_authkey.outputs.key }}
+          echo "✅ Successfully connected to Tailscale!"
+          tailscale status --peers=false
+          echo "Tailscale IP: $(tailscale ip -4)"
+
+      # Step 5: Use Tailscale network for your CI/CD tasks
+      - name: Your CI/CD tasks here
+        run: |
+          echo "🚀 Now connected to your Tailscale network!"
+          echo "You can access private resources in your tailnet."
+          # Add your deployment, testing, or other CI/CD steps here
