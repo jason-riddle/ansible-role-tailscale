@@ -60,12 +60,13 @@ jobs:
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
             echo "Failed to get Tailscale API token. Check OIDC configuration."
+            echo "API Response: $RESPONSE"
             exit 1
           fi
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$ACCESS_TOKEN"
 
-      # Step 3: Generate ephemeral Tailscale auth key
+      # Step 3: Generate Tailscale auth key
       - name: Generate Tailscale auth key
         id: generate_authkey
         run: |
@@ -88,10 +89,12 @@ jobs:
           AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
           if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
             echo "Failed to generate auth key. Check API token permissions and Tailscale ACL configuration."
+            echo "API Response: $RESPONSE"
             exit 1
           fi
           echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
           echo "::add-mask::$AUTH_KEY"
+        # Note: expirySeconds is set to 604800 (7 days) to match the weekly refresh schedule
 
       # Step 4: Update GitHub repository secret
       - name: Update TAILSCALE_AUTHKEY secret
