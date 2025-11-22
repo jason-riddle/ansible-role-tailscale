@@ -12,7 +12,19 @@ HTTPS certificates are now generally available as of December 20, 2023.
 See: https://tailscale.com/changelog#2023-12-20-service
 -->
 - Provision HTTPS certificates.
+- **OIDC Authentication for GitHub Actions** - Automatically generate short-lived auth keys without manual rotation.
 
+## GitHub Actions OIDC Integration
+
+This role supports OpenID Connect (OIDC) authentication for GitHub Actions, eliminating the need to manually rotate 90-day expiring Tailscale auth keys.
+
+**Benefits:**
+- ✅ No manual secret rotation required
+- ✅ Short-lived credentials generated per workflow run
+- ✅ Enhanced security with fine-grained access control
+- ✅ Zero maintenance - no more expired auth key failures
+
+**Setup Guide:** See [docs/OIDC_SETUP.md](docs/OIDC_SETUP.md) for complete configuration instructions.
 
 ## Requirements
 
