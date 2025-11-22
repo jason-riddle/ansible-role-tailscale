@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: 'jason_riddle.tailscale'
 
@@ -182,7 +182,7 @@ jobs:
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: 'jason_riddle.tailscale'
 
