@@ -133,7 +133,7 @@ jobs:
             -d "jwt=${{ steps.get_oidc_token.outputs.token }}")
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
-            echo "Failed to get Tailscale API token. Response: $RESPONSE"
+            echo "Failed to get Tailscale API token. Check OIDC configuration."
             exit 1
           fi
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
@@ -161,7 +161,7 @@ jobs:
             }')
           AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
           if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
-            echo "Failed to generate auth key. Response: $RESPONSE"
+            echo "Failed to generate auth key. Check API token permissions and Tailscale ACL configuration."
             exit 1
           fi
           echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
@@ -171,8 +171,9 @@ jobs:
         id: generate_oauth_secret
         if: steps.get_ts_api_token.outputs.access_token != ''
         run: |
-          # For OAuth client secret format, we use the same auth key with query params
-          # This mimics the existing TAILSCALE_OAUTH_CLIENT_SECRET format
+          # The up-with-oauth scenario expects a format like: tskey-client-xxx?ephemeral=true&preauthorized=true
+          # However, since we're using OIDC-generated auth keys which are already ephemeral and preauthorized,
+          # we can use the same auth key directly as the molecule test appends the query params
           OAUTH_SECRET="${{ steps.generate_authkey.outputs.key }}"
           echo "secret=$OAUTH_SECRET" >> $GITHUB_OUTPUT
           echo "::add-mask::$OAUTH_SECRET"

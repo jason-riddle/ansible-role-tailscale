@@ -47,7 +47,7 @@ jobs:
             -d "jwt=${{ steps.get_oidc_token.outputs.token }}")
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
-            echo "Failed to get Tailscale API token. Response: $RESPONSE"
+            echo "Failed to get Tailscale API token. Check OIDC configuration."
             exit 1
           fi
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
@@ -75,7 +75,7 @@ jobs:
             }')
           AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
           if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
-            echo "Failed to generate auth key. Response: $RESPONSE"
+            echo "Failed to generate auth key. Check API token permissions and Tailscale ACL configuration."
             exit 1
           fi
           echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
