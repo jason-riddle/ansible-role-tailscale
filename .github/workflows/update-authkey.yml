@@ -1,0 +1,102 @@
+---
+# Update Tailscale Auth Key via OIDC
+#
+# This workflow uses OIDC (OpenID Connect) to generate a Tailscale auth key
+# and updates the TAILSCALE_AUTHKEY repository secret.
+#
+# This workflow only runs on the main branch to ensure security.
+# Pull requests cannot trigger this workflow or access OIDC tokens.
+#
+# Prerequisites:
+# 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
+# 2. Set repository secrets:
+#    - TS_V2_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
+#    - TS_V2_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
+# 3. Repository settings:
+#    - Actions must have "Read and write permissions" under Settings > Actions > General
+#    - OR provide a PAT with 'repo' scope as PAT_TOKEN secret
+#
+# For complete setup instructions, see: .github/docs/OIDC_SETUP.md
+
+name: Update Auth Key
+
+on:
+  workflow_dispatch:  # Manual trigger
+  schedule:
+    # Run weekly on Sunday at 00:00 UTC to refresh the auth key
+    # Auth keys expire after a certain period, so periodic refresh is needed
+    - cron: "0 0 * * 0"
+
+permissions:
+  contents: read      # Required for actions/checkout
+  id-token: write     # Required for OIDC token generation
+
+jobs:
+  update-authkey:
+    runs-on: ubuntu-latest
+    # Only run on main branch to protect OIDC credentials
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      # Step 1: Get OIDC token from GitHub
+      - name: Get GitHub OIDC token
+        id: get_oidc_token
+        run: |
+          OIDC_TOKEN=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ secrets.TS_V2_OIDC_AUDIENCE }}" | jq -r '.value')
+          echo "token=$OIDC_TOKEN" >> $GITHUB_OUTPUT
+          echo "::add-mask::$OIDC_TOKEN"
+
+      # Step 2: Exchange OIDC token for Tailscale API token
+      - name: Exchange OIDC token for Tailscale API token
+        id: get_ts_api_token
+        run: |
+          RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/oauth/token-exchange \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "client_id=${{ secrets.TS_V2_OIDC_CLIENT_ID }}" \
+            -d "jwt=${{ steps.get_oidc_token.outputs.token }}")
+          ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
+          if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
+            echo "Failed to get Tailscale API token. Check OIDC configuration."
+            exit 1
+          fi
+          echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
+          echo "::add-mask::$ACCESS_TOKEN"
+
+      # Step 3: Generate ephemeral Tailscale auth key
+      - name: Generate Tailscale auth key
+        id: generate_authkey
+        run: |
+          RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/tailnet/-/keys \
+            -H "Authorization: Bearer ${{ steps.get_ts_api_token.outputs.access_token }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "capabilities": {
+                "devices": {
+                  "create": {
+                    "reusable": true,
+                    "ephemeral": true,
+                    "preauthorized": true,
+                    "tags": ["tag:github-actions"]
+                  }
+                }
+              },
+              "expirySeconds": 604800
+            }')
+          AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
+          if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
+            echo "Failed to generate auth key. Check API token permissions and Tailscale ACL configuration."
+            exit 1
+          fi
+          echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
+          echo "::add-mask::$AUTH_KEY"
+
+      # Step 4: Update GitHub repository secret
+      - name: Update TAILSCALE_AUTHKEY secret
+        run: |
+          echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTHKEY
+          echo "✅ TAILSCALE_AUTHKEY secret successfully updated!"
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
