@@ -55,7 +55,7 @@ jobs:
 
       # Step 3: Connect to Tailscale using GitHub Action
       - name: Connect to Tailscale
-        uses: tailscale/github-action@v2
+        uses: tailscale/github-action@v4
         with:
           oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
           oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
