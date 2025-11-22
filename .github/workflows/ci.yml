@@ -20,8 +20,8 @@ env:
   ANSIBLE_FORCE_COLOR: '1'
   # YAML Output
   # REF: http://web.archive.org/web/20220707112219/https://www.jeffgeerling.com/blog/2018/use-ansibles-yaml-callback-plugin-better-cli-experience
-  ANSIBLE_STDOUT_CALLBACK: 'yaml'
-  ANSIBLE_LOAD_CALLBACK_PLUGINS: true
+  ANSIBLE_STDOUT_CALLBACK: 'default'
+  ANSIBLE_CALLBACK_RESULT_FORMAT: 'yaml'
   # SSH Pipelining
   ANSIBLE_PIPELINING: true
   ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
