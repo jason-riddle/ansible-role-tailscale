@@ -1,4 +1,99 @@
 ---
+# CI Workflow with OIDC Authentication Support
+#
+# This workflow runs automated tests for the ansible-role-tailscale using Molecule.
+# It supports both traditional static secrets and modern OIDC-based authentication.
+#
+# OIDC Authentication Overview:
+# =============================
+# This implementation adds OpenID Connect (OIDC) authentication support for Tailscale
+# in GitHub Actions, solving the 90-day auth key expiration problem.
+#
+# Key Features:
+# 1. Automatic Auth Key Generation: No manual secret rotation needed
+# 2. Backward Compatibility: Falls back to static secrets if OIDC is not configured
+# 3. Zero Breaking Changes: Existing workflows continue to work unchanged
+# 4. Security Enhanced: Short-lived credentials that expire after use
+# 5. Fine-grained Control: Support for repository, branch, and event-based restrictions
+#
+# How OIDC Works:
+# ===============
+# Configuration (One-Time Setup):
+# 1. Create a Tailscale Trust Credential with OIDC type
+# 2. Set two GitHub repository variables:
+#    - TS_V2_OIDC_CLIENT_ID: Tailscale OIDC client ID
+#    - TS_V2_OIDC_AUDIENCE: Custom audience string
+#
+# Runtime (Per Workflow Run):
+# 1. Get OIDC Token: GitHub Actions provides an OIDC token (JWT)
+# 2. Exchange Token: Send JWT to Tailscale's token exchange endpoint
+# 3. Get API Token: Receive short-lived Tailscale API token
+# 4. Generate Keys: Use API token to create ephemeral auth keys
+# 5. Run Tests: Pass auth keys to Molecule tests
+#
+# Fallback Behavior:
+# =================
+# If OIDC variables are not configured:
+# - OIDC steps are skipped (conditional execution)
+# - Workflow uses existing TAILSCALE_AUTHKEY and TAILSCALE_OAUTH_CLIENT_SECRET secrets
+# - No changes required for repositories not using OIDC
+#
+# Quick Setup (5 minutes):
+# ========================
+# 1. Create Tailscale Trust Credential:
+#    - Go to https://login.tailscale.com/admin/settings/keys
+#    - Add trust credential with:
+#      * Type: OpenID Connect
+#      * Issuer: https://token.actions.githubusercontent.com
+#      * Audience: tailscale-ci (choose any name)
+#      * Subject: repo:YOUR-ORG/YOUR-REPO:*
+#
+# 2. Configure GitHub Variables:
+#    - Go to repository Settings > Secrets and variables > Actions > Variables
+#    - Add: TS_V2_OIDC_CLIENT_ID = <Client ID from Step 1>
+#    - Add: TS_V2_OIDC_AUDIENCE = tailscale-ci (same as Step 1)
+#
+# 3. Update Tailscale ACL:
+#    Add to your ACL policy:
+#    {
+#      "tagOwners": {
+#        "tag:github-actions": ["autogroup:admin"]
+#      }
+#    }
+#
+# Security Considerations:
+# =======================
+# - All tokens and keys are masked in logs using ::add-mask::
+# - Auth keys expire in 1 hour (3600 seconds)
+# - Generated keys create ephemeral nodes that auto-cleanup
+# - OIDC steps only run when properly configured
+# - Failed token exchanges prevent workflow continuation
+#
+# Troubleshooting:
+# ===============
+# OIDC steps are skipped?
+# - Verify TS_V2_OIDC_CLIENT_ID and TS_V2_OIDC_AUDIENCE are set as Variables (not Secrets)
+#
+# "Failed to get Tailscale API token"?
+# - Verify Client ID matches Tailscale Trust Credential
+# - Verify Audience matches Tailscale Trust Credential
+# - Check subject pattern includes your repository path
+#
+# "Failed to generate auth key"?
+# - Verify tag:github-actions exists in Tailscale ACL
+# - Check Tailscale admin console audit logs for details
+#
+# API Endpoints Used:
+# ===================
+# - GitHub OIDC: $ACTIONS_ID_TOKEN_REQUEST_URL (returns JWT)
+# - Tailscale Token Exchange: https://api.tailscale.com/api/v2/oauth/token-exchange
+# - Tailscale Auth Key Generation: https://api.tailscale.com/api/v2/tailnet/-/keys
+#
+# References:
+# ===========
+# - Tailscale OIDC Docs: https://tailscale.com/kb/1581/workload-identity-federation
+# - GitHub OIDC Docs: https://docs.github.com/en/actions/concepts/security/openid-connect
+
 name: CI
 
 on:

@@ -2,21 +2,88 @@
 # Update Tailscale Auth Key via OIDC
 #
 # This workflow uses OIDC (OpenID Connect) to generate a Tailscale auth key
-# and updates the TAILSCALE_AUTHKEY repository secret.
+# and updates the TAILSCALE_AUTHKEY repository secret automatically.
 #
-# This workflow only runs on the main branch to ensure security.
-# Pull requests cannot trigger this workflow or access OIDC tokens.
+# Key Benefits:
+# =============
+# ✅ Automatic weekly auth key rotation (no manual intervention)
+# ✅ 7-day reusable keys (vs 90-day limit with static secrets)
+# ✅ Ephemeral nodes that auto-cleanup
+# ✅ Enhanced security with short-lived credentials
+# ✅ Zero maintenance - runs on schedule automatically
+#
+# Security Features:
+# =================
+# - Only runs on main branch (pull requests cannot trigger this)
+# - Generates reusable but ephemeral auth keys
+# - Keys expire in 7 days (604800 seconds)
+# - Tagged with "tag:github-actions" for proper ACL control
+# - All tokens masked in logs
 #
 # Prerequisites:
-# 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
-# 2. Set repository secrets:
+# =============
+# 1. Configure Tailscale Trust Credential:
+#    - Go to https://login.tailscale.com/admin/settings/keys
+#    - Add trust credential with:
+#      * Type: OpenID Connect
+#      * Issuer: https://token.actions.githubusercontent.com
+#      * Audience: tailscale-ci (choose any name)
+#      * Subject: repo:YOUR-ORG/YOUR-REPO:ref:refs/heads/main (main branch only)
+#
+# 2. Set repository variables (not secrets):
 #    - TS_V2_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
 #    - TS_V2_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
-# 3. Repository settings:
+#
+# 3. Repository permissions:
 #    - Actions must have "Read and write permissions" under Settings > Actions > General
 #    - OR provide a PAT with 'repo' scope as PAT_TOKEN secret
 #
-# For complete setup instructions, see: .github/docs/OIDC_SETUP.md
+# 4. Update Tailscale ACL:
+#    Add to your ACL policy:
+#    {
+#      "tagOwners": {
+#        "tag:github-actions": ["autogroup:admin"]
+#      }
+#    }
+#
+# How It Works:
+# ============
+# 1. Runs weekly on Sunday at 00:00 UTC (or manually via workflow_dispatch)
+# 2. Only executes on main branch for security
+# 3. Gets OIDC token from GitHub Actions
+# 4. Exchanges OIDC token for Tailscale API token
+# 5. Generates new 7-day reusable auth key with ephemeral properties
+# 6. Updates TAILSCALE_AUTHKEY repository secret using GitHub CLI
+#
+# Auth Key Properties:
+# ===================
+# - reusable: true - allows multiple CI runs to use the same key until expiry
+# - ephemeral: true - devices are automatically removed when disconnected
+# - expirySeconds: 604800 (7 days) - matches the weekly refresh schedule
+# - tags: ["tag:github-actions"] - proper ACL tagging
+# - preauthorized: true - devices can join without additional approval
+#
+# Troubleshooting:
+# ===============
+# "Failed to get Tailscale API token"?
+# - Verify Client ID matches Tailscale Trust Credential
+# - Verify Audience matches Tailscale Trust Credential
+# - Check subject pattern includes your repository path and main branch
+#
+# "Failed to generate auth key"?
+# - Verify tag:github-actions exists in Tailscale ACL
+# - Check Tailscale admin console audit logs for details
+#
+# "Failed to update secret"?
+# - Verify repository has "Read and write permissions" for Actions
+# - OR ensure PAT_TOKEN secret is set with 'repo' scope
+# - Check that gh CLI can authenticate
+#
+# References:
+# ===========
+# - Tailscale OIDC Docs: https://tailscale.com/kb/1581/workload-identity-federation
+# - GitHub OIDC Docs: https://docs.github.com/en/actions/concepts/security/openid-connect
+# - GitHub CLI Docs: https://cli.github.com/manual/gh_secret_set
 
 name: Update Auth Key
 

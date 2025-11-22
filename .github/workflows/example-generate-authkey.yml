@@ -4,13 +4,66 @@
 # This workflow demonstrates how to use OIDC (OpenID Connect) to generate
 # a Tailscale auth key via curl without actually connecting to the network.
 #
+# What You Get:
+# =============
+# ✅ No more manual auth key rotation (90-day limit eliminated)
+# ✅ Short-lived credentials generated per CI run
+# ✅ Enhanced security with automatic cleanup
+# ✅ Zero maintenance overhead
+#
 # Prerequisites:
-# 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
-# 2. Set repository secrets:
+# =============
+# 1. Configure Tailscale Trust Credential:
+#    - Go to https://login.tailscale.com/admin/settings/keys
+#    - Add trust credential with:
+#      * Type: OpenID Connect
+#      * Issuer: https://token.actions.githubusercontent.com
+#      * Audience: tailscale-ci (choose any name)
+#      * Subject: repo:YOUR-ORG/YOUR-REPO:*
+#
+# 2. Set repository variables (not secrets):
 #    - TS_V2_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
 #    - TS_V2_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
 #
-# For complete setup instructions, see: .github/docs/OIDC_SETUP.md
+# 3. Update Tailscale ACL:
+#    Add to your ACL policy:
+#    {
+#      "tagOwners": {
+#        "tag:github-actions": ["autogroup:admin"]
+#      }
+#    }
+#
+# How It Works:
+# ============
+# 1. GitHub Actions requests an OIDC token from https://token.actions.githubusercontent.com
+# 2. The OIDC token (a signed JWT) is sent to Tailscale's token exchange endpoint
+# 3. Tailscale verifies the token signature and claims against your Trust Credential configuration
+# 4. Tailscale returns a short-lived API token
+# 5. The API token is used to generate ephemeral auth keys for the CI run
+#
+# Security Notes:
+# ==============
+# - All tokens are masked in logs using ::add-mask::
+# - Auth keys expire in 1 hour (3600 seconds)
+# - Nodes are ephemeral (auto-cleanup)
+# - Fine-grained access control via OIDC claims
+# - No long-lived secrets stored
+#
+# Troubleshooting:
+# ===============
+# "Failed to get Tailscale API token"?
+# - Verify Client ID matches Tailscale Trust Credential
+# - Verify Audience matches Tailscale Trust Credential
+# - Check subject pattern includes your repository path
+#
+# "Failed to generate auth key"?
+# - Verify tag:github-actions exists in Tailscale ACL
+# - Check Tailscale admin console audit logs for details
+#
+# References:
+# ===========
+# - Tailscale OIDC Docs: https://tailscale.com/kb/1581/workload-identity-federation
+# - GitHub OIDC Docs: https://docs.github.com/en/actions/concepts/security/openid-connect
 
 name: Example - Generate Auth Key via OIDC
 
