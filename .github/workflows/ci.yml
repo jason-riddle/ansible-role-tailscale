@@ -113,10 +113,8 @@ jobs:
         run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
 
       # OIDC-based Tailscale Authentication
-      # Only run if OIDC secrets are configured, fallback to static secrets otherwise
       - name: Get GitHub OIDC token
         id: get_oidc_token
-        if: vars.TS_V2_OIDC_CLIENT_ID != '' && vars.TS_V2_OIDC_AUDIENCE != ''
         run: |
           OIDC_TOKEN=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ vars.TS_V2_OIDC_AUDIENCE }}" | jq -r '.value')
@@ -125,7 +123,6 @@ jobs:
 
       - name: Exchange OIDC token for Tailscale API token
         id: get_ts_api_token
-        if: steps.get_oidc_token.outputs.token != ''
         run: |
           RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/oauth/token-exchange \
             -H "Content-Type: application/x-www-form-urlencoded" \
@@ -141,7 +138,6 @@ jobs:
 
       - name: Generate ephemeral Tailscale auth key (for 'up' test)
         id: generate_authkey
-        if: steps.get_ts_api_token.outputs.access_token != ''
         run: |
           RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/tailnet/-/keys \
             -H "Authorization: Bearer ${{ steps.get_ts_api_token.outputs.access_token }}" \
@@ -191,8 +187,8 @@ jobs:
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          # Use OIDC-generated auth key if available, otherwise fall back to static secret
-          TAILSCALE_AUTHKEY: "${{ steps.generate_authkey.outputs.key || secrets.TS_V2_AUTHKEY }}"
+          # Always use OIDC-generated auth key
+          TAILSCALE_AUTHKEY: "${{ steps.generate_authkey.outputs.key }}"
 
       - name: Run Molecule up-with-oauth test.
         run: |
@@ -200,8 +196,8 @@ jobs:
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          # Use OIDC-generated OAuth secret if available, otherwise fall back to static secret
-          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ steps.generate_oauth_secret.outputs.secret || secrets.TS_V2_OAUTH_CLIENT_SECRET }}"
+          # Always use OIDC-generated OAuth secret
+          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ steps.generate_oauth_secret.outputs.secret }}"
 
       # TODO: serve and funnel command line arguments have changed.
       # See https://tailscale.com/blog/reintroducing-serve-funnel/.
