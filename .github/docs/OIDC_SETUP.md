@@ -74,10 +74,10 @@ These variables are **not secrets** and can be safely stored as repository varia
 2. Navigate to **Settings** → **Secrets and variables** → **Actions** → **Variables** tab
 3. Add the following repository variables:
 
-   - **Name**: `TS_OIDC_CLIENT_ID`
+   - **Name**: `TS_V2_OIDC_CLIENT_ID`
    - **Value**: The Client ID from Step 1
    
-   - **Name**: `TS_OIDC_AUDIENCE`
+   - **Name**: `TS_V2_OIDC_AUDIENCE`
    - **Value**: The same audience value you configured in Tailscale (e.g., `tailscale-ci`)
 
 ## Step 3: Configure Workflow Permissions
@@ -126,8 +126,8 @@ Check the workflow logs to see the OIDC token exchange in action:
 ## Fallback to Static Secrets
 
 The workflow maintains backward compatibility. If OIDC variables are not configured, it will fall back to using:
-- `TAILSCALE_AUTHKEY` secret (for the `up` test)
-- `TAILSCALE_OAUTH_CLIENT_SECRET` secret (for the `up-with-oauth` test)
+- `TS_V2_AUTHKEY` secret (for the `up` test)
+- `TS_V2_OAUTH_CLIENT_SECRET` secret (for the `up-with-oauth` test)
 
 This allows for gradual migration to OIDC authentication.
 
@@ -135,8 +135,8 @@ This allows for gradual migration to OIDC authentication.
 
 ### "Failed to get Tailscale API token"
 
-- Verify the `TS_OIDC_CLIENT_ID` matches the Client ID from Tailscale
-- Verify the `TS_OIDC_AUDIENCE` matches the audience configured in Tailscale
+- Verify the `TS_V2_OIDC_CLIENT_ID` matches the Client ID from Tailscale
+- Verify the `TS_V2_OIDC_AUDIENCE` matches the audience configured in Tailscale
 - Check that the Trust Credential subject pattern matches your repository path
 
 ### "Failed to generate auth key"
@@ -147,7 +147,7 @@ This allows for gradual migration to OIDC authentication.
 
 ### OIDC steps are being skipped
 
-- Verify both `TS_OIDC_CLIENT_ID` and `TS_OIDC_AUDIENCE` are set as repository variables
+- Verify both `TS_V2_OIDC_CLIENT_ID` and `TS_V2_OIDC_AUDIENCE` are set as repository variables
 - Check that the variables are not set as secrets (they should be variables)
 - Ensure the workflow has `id-token: write` permission
 

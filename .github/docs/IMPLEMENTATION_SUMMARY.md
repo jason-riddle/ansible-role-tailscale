@@ -32,7 +32,7 @@ GitHub OIDC Token → Tailscale API Token → Ephemeral Auth Keys → Molecule T
 - Added new section highlighting OIDC authentication feature
 - Added link to setup documentation
 
-### 3. `docs/OIDC_SETUP.md` (New)
+### 3. `.github/docs/OIDC_SETUP.md` (New)
 **Purpose:**
 Complete step-by-step guide for setting up OIDC authentication including:
 - Tailscale Trust Credential configuration
@@ -53,8 +53,8 @@ Standalone example workflow demonstrating OIDC integration that users can:
 ### Configuration (One-Time Setup)
 1. User creates a Tailscale Trust Credential with OIDC type
 2. User sets two GitHub repository variables:
-   - `TS_OIDC_CLIENT_ID`: Tailscale OIDC client ID
-   - `TS_OIDC_AUDIENCE`: Custom audience string
+   - `TS_V2_OIDC_CLIENT_ID`: Tailscale OIDC client ID
+   - `TS_V2_OIDC_AUDIENCE`: Custom audience string
 
 ### Runtime (Per Workflow Run)
 1. **Get OIDC Token**: GitHub Actions provides an OIDC token (JWT)
@@ -66,7 +66,7 @@ Standalone example workflow demonstrating OIDC integration that users can:
 ### Fallback Behavior
 If OIDC variables are not configured:
 - OIDC steps are skipped (conditional execution)
-- Workflow uses existing `TAILSCALE_AUTHKEY` and `TAILSCALE_OAUTH_CLIENT_SECRET` secrets
+- Workflow uses existing `TS_V2_AUTHKEY` and `TS_V2_OAUTH_CLIENT_SECRET` secrets
 - No changes required for repositories not using OIDC
 
 ## Security Considerations
@@ -107,7 +107,7 @@ If OIDC variables are not configured:
 
 ## Testing Recommendations
 
-1. **Setup OIDC** following `docs/OIDC_SETUP.md`
+1. **Setup OIDC** following `.github/docs/OIDC_SETUP.md`
 2. **Run Example Workflow** to verify configuration
 3. **Monitor Logs** for successful token exchange
 4. **Check Tailscale Admin** for node creation with correct tags

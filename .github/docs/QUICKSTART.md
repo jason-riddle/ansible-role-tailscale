@@ -29,8 +29,8 @@ This is a quick reference guide for setting up OIDC authentication. For complete
 1. Go to your repository → **Settings** → **Secrets and variables** → **Actions** → **Variables**
 2. Add two variables:
    ```
-   TS_OIDC_CLIENT_ID = <paste Client ID from Step 1>
-   TS_OIDC_AUDIENCE = tailscale-ci (same as Step 1)
+   TS_V2_OIDC_CLIENT_ID = <paste Client ID from Step 1>
+   TS_V2_OIDC_AUDIENCE = tailscale-ci (same as Step 1)
    ```
 
 ### Step 3: Update Tailscale ACL
@@ -60,15 +60,15 @@ Your CI now generates auth keys automatically. No more expired keys, no more man
 ## Fallback Behavior
 
 If OIDC variables are not set, the workflow automatically falls back to using:
-- `TAILSCALE_AUTHKEY` secret (for `up` test)
-- `TAILSCALE_OAUTH_CLIENT_SECRET` secret (for `up-with-oauth` test)
+- `TS_V2_AUTHKEY` secret (for `up` test)
+- `TS_V2_OAUTH_CLIENT_SECRET` secret (for `up-with-oauth` test)
 
 This means you can migrate gradually without breaking existing workflows.
 
 ## Troubleshooting
 
 **OIDC steps are skipped?**
-- Check that both `TS_OIDC_CLIENT_ID` and `TS_OIDC_AUDIENCE` are set as **Variables** (not Secrets)
+- Check that both `TS_V2_OIDC_CLIENT_ID` and `TS_V2_OIDC_AUDIENCE` are set as **Variables** (not Secrets)
 
 **"Failed to get Tailscale API token"?**
 - Verify Client ID matches Tailscale Trust Credential
