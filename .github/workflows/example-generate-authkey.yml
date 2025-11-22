@@ -71,7 +71,7 @@ jobs:
                   }
                 }
               },
-              "expirySeconds": 86400
+              "expirySeconds": 3600
             }')
           AUTH_KEY=$(echo "$RESPONSE" | jq -r '.key')
           if [ "$AUTH_KEY" = "null" ] || [ -z "$AUTH_KEY" ]; then
