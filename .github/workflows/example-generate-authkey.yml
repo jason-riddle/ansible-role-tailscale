@@ -67,7 +67,7 @@ jobs:
                     "reusable": false,
                     "ephemeral": true,
                     "preauthorized": true,
-                    "tags": ["tag:github-actions"]
+                    "tags": ["tag:github-actions", "tag:untrusted"]
                   }
                 }
               },
