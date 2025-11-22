@@ -117,7 +117,7 @@ jobs:
         id: get_oidc_token
         run: |
           OIDC_TOKEN=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ vars.TS_V2_OIDC_AUDIENCE }}" | jq -r '.value')
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ secrets.TS_V2_OIDC_AUDIENCE }}" | jq -r '.value')
           echo "token=$OIDC_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$OIDC_TOKEN"
 
@@ -126,7 +126,7 @@ jobs:
         run: |
           RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/oauth/token-exchange \
             -H "Content-Type: application/x-www-form-urlencoded" \
-            -d "client_id=${{ vars.TS_V2_OIDC_CLIENT_ID }}" \
+            -d "client_id=${{ secrets.TS_V2_OIDC_CLIENT_ID }}" \
             -d "jwt=${{ steps.get_oidc_token.outputs.token }}")
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
