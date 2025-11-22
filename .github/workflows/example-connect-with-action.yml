@@ -61,16 +61,9 @@ jobs:
           oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
           tags: tag:github-actions
 
-      # Step 4: Verify connection
-      - name: Verify Tailscale connection
-        run: |
-          echo "✅ Successfully connected to Tailscale!"
-          tailscale status --peers=false
-          echo "Tailscale IP: $(tailscale ip -4)"
-
-      # Step 5: Use Tailscale network for your CI/CD tasks
+      # Step 4: Use Tailscale network for your CI/CD tasks
       - name: Your CI/CD tasks here
         run: |
-          echo "🚀 Now connected to your Tailscale network!"
-          echo "You can access private resources in your tailnet."
+          echo "🚀 Connected to your Tailscale network!"
+          echo "You can now access private resources in your tailnet."
           # Add your deployment, testing, or other CI/CD steps here
