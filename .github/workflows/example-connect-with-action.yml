@@ -1,8 +1,8 @@
 ---
-# Example: Tailscale Action with OIDC Authentication
+# Example: Connect to Tailscale via GitHub Action with OIDC
 #
-# This workflow demonstrates how to use the Tailscale GitHub Action with
-# OIDC authentication, including the necessary token exchange steps.
+# This workflow demonstrates how to use the Tailscale GitHub Action to connect
+# to your Tailscale network using OIDC (OpenID Connect) authentication.
 #
 # Prerequisites:
 # 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
@@ -12,7 +12,7 @@
 #
 # For complete setup instructions, see: .github/docs/OIDC_SETUP.md
 
-name: Example Simple Tailscale Action
+name: Example - Connect via Tailscale Action
 
 on:
   workflow_dispatch:  # Manual trigger for testing
@@ -22,12 +22,13 @@ permissions:
   id-token: write     # Required for OIDC token generation
 
 jobs:
-  simple-tailscale-example:
+  connect-to-tailscale:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      # Step 1: Get OIDC token from GitHub
       - name: Get GitHub OIDC token
         id: get_oidc_token
         run: |
@@ -36,6 +37,7 @@ jobs:
           echo "token=$OIDC_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$OIDC_TOKEN"
 
+      # Step 2: Exchange OIDC token for Tailscale API token
       - name: Exchange OIDC token for Tailscale API token
         id: get_ts_api_token
         run: |
@@ -51,26 +53,17 @@ jobs:
           echo "access_token=$ACCESS_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$ACCESS_TOKEN"
 
-      - name: Connect to Tailscale Network
+      # Step 3: Connect to Tailscale using GitHub Action
+      - name: Connect to Tailscale
         uses: tailscale/github-action@v2
         with:
           oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
           oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
           tags: tag:github-actions
 
-      - name: Verify Tailscale connection
+      # Step 4: Use Tailscale network for your CI/CD tasks
+      - name: Your CI/CD tasks here
         run: |
-          echo "✅ Successfully connected to Tailscale!"
-          tailscale status --peers=false
-          echo "IP: $(tailscale ip -4)"
-
-      - name: Test Tailscale Connection
-        run: |
-          echo "🔗 Connected to Tailscale network!"
-          tailscale status --json | jq '.User, .Tailnet, .Self.IPs'
-
-      - name: Your CI/CD Steps Here
-        run: |
-          # Add your application deployment, testing, or other CI/CD steps
-          echo "🚀 Ready for your CI/CD pipeline!"
-          echo "This machine is now part of your Tailscale network."
+          echo "🚀 Connected to your Tailscale network!"
+          echo "You can now access private resources in your tailnet."
+          # Add your deployment, testing, or other CI/CD steps here

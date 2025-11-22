@@ -1,8 +1,8 @@
 ---
-# Example: Using Tailscale with OIDC Authentication in GitHub Actions
+# Example: Generate Tailscale Auth Key via OIDC
 #
-# This workflow demonstrates how to use OIDC (OpenID Connect) to automatically
-# generate Tailscale auth keys without storing long-lived secrets.
+# This workflow demonstrates how to use OIDC (OpenID Connect) to generate
+# a Tailscale auth key via curl without actually connecting to the network.
 #
 # Prerequisites:
 # 1. Configure Tailscale Trust Credential (see .github/docs/OIDC_SETUP.md)
@@ -12,7 +12,7 @@
 #
 # For complete setup instructions, see: .github/docs/OIDC_SETUP.md
 
-name: Example OIDC Workflow
+name: Example - Generate Auth Key via OIDC
 
 on:
   workflow_dispatch:  # Manual trigger for testing
@@ -22,7 +22,7 @@ permissions:
   id-token: write     # Required for OIDC token generation
 
 jobs:
-  tailscale-oidc-example:
+  generate-authkey:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -81,20 +81,11 @@ jobs:
           echo "key=$AUTH_KEY" >> $GITHUB_OUTPUT
           echo "::add-mask::$AUTH_KEY"
 
-      # Step 4: Use the generated auth key with your Ansible role
-      - name: Run ansible playbook with Tailscale
+      # Step 4: Use the generated auth key
+      - name: Display auth key status
         run: |
-          # Your ansible playbook execution here
-          # The TAILSCALE_AUTHKEY is available as an environment variable
-          echo "Auth key successfully generated!"
-          echo "You can now use it in your Ansible playbook"
+          echo "✅ Auth key successfully generated!"
+          echo "The auth key is available as: steps.generate_authkey.outputs.key"
+          echo "You can use this key to connect devices to your Tailscale network."
         env:
           TAILSCALE_AUTHKEY: ${{ steps.generate_authkey.outputs.key }}
-
-      # Alternative: Use with Tailscale GitHub Action
-      - name: Connect to Tailscale (using official action)
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_V2_OIDC_CLIENT_ID }}
-          oauth-secret: ${{ steps.get_ts_api_token.outputs.access_token }}
-          tags: tag:github-actions
