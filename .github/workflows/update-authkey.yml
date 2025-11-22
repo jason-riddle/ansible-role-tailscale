@@ -2,7 +2,7 @@
 # Update Tailscale Auth Key via OIDC
 #
 # This workflow uses OIDC (OpenID Connect) to generate a Tailscale auth key
-# and updates the TAILSCALE_AUTHKEY repository secret automatically.
+# and updates the TAILSCALE_AUTH_KEY repository secret automatically.
 #
 # Key Benefits:
 # =============
@@ -31,8 +31,8 @@
 #      * Subject: repo:YOUR-ORG/YOUR-REPO:ref:refs/heads/main (main branch only)
 #
 # 2. Set repository variables (not secrets):
-#    - TS_V2_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
-#    - TS_V2_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
+#    - TAILSCALE_OIDC_CLIENT_ID: Your Tailscale OIDC client ID
+#    - TAILSCALE_OIDC_AUDIENCE: Your custom audience (e.g., "tailscale-ci")
 #
 # 3. Repository permissions:
 #    - Actions must have "Read and write permissions" under Settings > Actions > General
@@ -53,7 +53,7 @@
 # 3. Gets OIDC token from GitHub Actions
 # 4. Exchanges OIDC token for Tailscale API token
 # 5. Generates new 7-day reusable auth key with ephemeral properties
-# 6. Updates TAILSCALE_AUTHKEY repository secret using GitHub CLI
+# 6. Updates TAILSCALE_AUTH_KEY repository secret using GitHub CLI
 #
 # Auth Key Properties:
 # ===================
@@ -112,7 +112,7 @@ jobs:
         id: get_oidc_token
         run: |
           OIDC_TOKEN=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ secrets.TS_V2_OIDC_AUDIENCE }}" | jq -r '.value')
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${{ secrets.TAILSCALE_OIDC_AUDIENCE }}" | jq -r '.value')
           echo "token=$OIDC_TOKEN" >> $GITHUB_OUTPUT
           echo "::add-mask::$OIDC_TOKEN"
 
@@ -122,7 +122,7 @@ jobs:
         run: |
           RESPONSE=$(curl -sS -X POST https://api.tailscale.com/api/v2/oauth/token-exchange \
             -H "Content-Type: application/x-www-form-urlencoded" \
-            -d "client_id=${{ secrets.TS_V2_OIDC_CLIENT_ID }}" \
+            -d "client_id=${{ secrets.TAILSCALE_OIDC_CLIENT_ID }}" \
             -d "jwt=${{ steps.get_oidc_token.outputs.token }}")
           ACCESS_TOKEN=$(echo "$RESPONSE" | jq -r '.access_token')
           if [ "$ACCESS_TOKEN" = "null" ] || [ -z "$ACCESS_TOKEN" ]; then
@@ -168,9 +168,9 @@ jobs:
           echo "::add-mask::$AUTH_KEY"
 
       # Step 4: Update GitHub repository secret
-      - name: Update TAILSCALE_AUTHKEY secret
+      - name: Update TAILSCALE_AUTH_KEY secret
         run: |
-          echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTHKEY
-          echo "✅ TAILSCALE_AUTHKEY secret successfully updated!"
+          echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTH_KEY
+          echo "✅ TAILSCALE_AUTH_KEY secret successfully updated!"
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
