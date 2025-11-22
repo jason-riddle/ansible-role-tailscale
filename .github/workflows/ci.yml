@@ -12,6 +12,7 @@ on:
     # Run at 3pm on Friday.
     # REF: https://crontab.guru/#0_3_*_*_5
     - cron: "0 3 * * 5"
+  workflow_dispatch:
 
 env:
   # Colors
