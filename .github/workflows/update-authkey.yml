@@ -2,7 +2,7 @@
 # Update Tailscale Auth Key via OIDC
 #
 # This workflow uses OIDC (OpenID Connect) to generate a Tailscale auth key
-# and updates the TAILSCALE_AUTH_KEY repository secret automatically.
+# and updates the TAILSCALE_AUTHKEY repository secret automatically.
 #
 # Key Benefits:
 # =============
@@ -53,7 +53,7 @@
 # 3. Gets OIDC token from GitHub Actions
 # 4. Exchanges OIDC token for Tailscale API token
 # 5. Generates new 7-day reusable auth key with ephemeral properties
-# 6. Updates TAILSCALE_AUTH_KEY repository secret using GitHub CLI
+# 6. Updates TAILSCALE_AUTHKEY repository secret using GitHub CLI
 #
 # Auth Key Properties:
 # ===================
@@ -168,9 +168,9 @@ jobs:
           echo "::add-mask::$AUTH_KEY"
 
       # Step 4: Update GitHub repository secret
-      - name: Update TAILSCALE_AUTH_KEY secret
+      - name: Update TAILSCALE_AUTHKEY secret
         run: |
-          echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTH_KEY
-          echo "✅ TAILSCALE_AUTH_KEY secret successfully updated!"
+          echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTHKEY
+          echo "✅ TAILSCALE_AUTHKEY secret successfully updated!"
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
