@@ -35,7 +35,7 @@
 # =================
 # If OIDC variables are not configured:
 # - OIDC steps are skipped (conditional execution)
-# - Workflow uses existing TAILSCALE_AUTHKEY and TAILSCALE_OAUTH_CLIENT_SECRET secrets
+# - Workflow uses existing TAILSCALE_AUTHKEY and MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET secrets
 # - No changes required for repositories not using OIDC
 #
 # Quick Setup (5 minutes):
@@ -226,7 +226,7 @@ jobs:
         env:
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
-          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ secrets.TAILSCALE_OAUTH_CLIENT_SECRET }}"
+          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ secrets.MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET }}"
 
       # TODO: serve and funnel command line arguments have changed.
       # See https://tailscale.com/blog/reintroducing-serve-funnel/.
