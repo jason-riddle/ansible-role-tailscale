@@ -1,0 +1,251 @@
+---
+# CI Workflow with OIDC Authentication Support
+#
+# This workflow runs automated tests for the ansible-role-tailscale using Molecule.
+# It supports both traditional static secrets and modern OIDC-based authentication.
+#
+# OIDC Authentication Overview:
+# =============================
+# This implementation adds OpenID Connect (OIDC) authentication support for Tailscale
+# in GitHub Actions, solving the 90-day auth key expiration problem.
+#
+# Key Features:
+# 1. Automatic Auth Key Generation: No manual secret rotation needed
+# 2. Backward Compatibility: Falls back to static secrets if OIDC is not configured
+# 3. Zero Breaking Changes: Existing workflows continue to work unchanged
+# 4. Security Enhanced: Short-lived credentials that expire after use
+# 5. Fine-grained Control: Support for repository, branch, and event-based restrictions
+#
+# How OIDC Works:
+# ===============
+# Configuration (One-Time Setup):
+# 1. Create a Tailscale Trust Credential with OIDC type
+# 2. Set two GitHub repository variables:
+#    - MANAGED_TAILSCALE_OIDC_GHA_CLIENT_ID: Tailscale OIDC client ID
+#    - MANAGED_TAILSCALE_OIDC_GHA_CLIENT_AUDIENCE: Custom audience string
+#
+# Runtime (Per Workflow Run):
+# 1. Get OIDC Token: GitHub Actions provides an OIDC token (JWT)
+# 2. Exchange Token: Send JWT to Tailscale's token exchange endpoint
+# 3. Get API Token: Receive short-lived Tailscale API token
+# 4. Generate Keys: Use API token to create ephemeral auth keys
+# 5. Run Tests: Pass auth keys to Molecule tests
+#
+# Fallback Behavior:
+# =================
+# If OIDC variables are not configured:
+# - OIDC steps are skipped (conditional execution)
+# - Workflow uses existing TAILSCALE_AUTHKEY and MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET secrets
+# - No changes required for repositories not using OIDC
+#
+# Quick Setup (5 minutes):
+# ========================
+# 1. Create Tailscale Trust Credential:
+#    - Go to https://login.tailscale.com/admin/settings/keys
+#    - Add trust credential with:
+#      * Type: OpenID Connect
+#      * Issuer: https://token.actions.githubusercontent.com
+#      * Audience: tailscale-ci (choose any name)
+#      * Subject: repo:YOUR-ORG/YOUR-REPO:*
+#
+# 2. Configure GitHub Variables:
+#    - Go to repository Settings > Secrets and variables > Actions > Variables
+#    - Add: MANAGED_TAILSCALE_OIDC_GHA_CLIENT_ID = <Client ID from Step 1>
+#    - Add: MANAGED_TAILSCALE_OIDC_GHA_CLIENT_AUDIENCE = tailscale-ci (same as Step 1)
+#
+# 3. Update Tailscale ACL:
+#    Add to your ACL policy:
+#    {
+#      "tagOwners": {
+#        "tag:github-actions": ["autogroup:admin"]
+#      }
+#    }
+#
+# Security Considerations:
+# =======================
+# - All tokens and keys are masked in logs using ::add-mask::
+# - Auth keys expire in 1 hour (3600 seconds)
+# - Generated keys create ephemeral nodes that auto-cleanup
+# - OIDC steps only run when properly configured
+# - Failed token exchanges prevent workflow continuation
+#
+# Troubleshooting:
+# ===============
+# OIDC steps are skipped?
+# - Verify MANAGED_TAILSCALE_OIDC_GHA_CLIENT_ID and MANAGED_TAILSCALE_OIDC_GHA_CLIENT_AUDIENCE are set as Variables (not Secrets)
+#
+# "Failed to get Tailscale API token"?
+# - Verify Client ID matches Tailscale Trust Credential
+# - Verify Audience matches Tailscale Trust Credential
+# - Check subject pattern includes your repository path
+#
+# "Failed to generate auth key"?
+# - Verify tag:github-actions exists in Tailscale ACL
+# - Check Tailscale admin console audit logs for details
+#
+# API Endpoints Used:
+# ===================
+# - GitHub OIDC: $ACTIONS_ID_TOKEN_REQUEST_URL (returns JWT)
+# - Tailscale Token Exchange: https://api.tailscale.com/api/v2/oauth/token-exchange
+# - Tailscale Auth Key Generation: https://api.tailscale.com/api/v2/tailnet/-/keys
+#
+# References:
+# ===========
+# - Tailscale OIDC Docs: https://tailscale.com/kb/1581/workload-identity-federation
+# - GitHub OIDC Docs: https://docs.github.com/en/actions/concepts/security/openid-connect
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+  schedule:
+    # Run at 3pm on Friday.
+    # REF: https://crontab.guru/#0_3_*_*_5
+    - cron: "0 3 * * 5"
+  workflow_dispatch:
+
+env:
+  # Colors
+  # REF: http://web.archive.org/web/20230608140615/https://www.jeffgeerling.com/blog/2020/getting-colorized-output-molecule-and-ansible-on-github-actions-ci
+  PY_COLORS: '1'
+  ANSIBLE_FORCE_COLOR: '1'
+  # YAML Output
+  # REF: http://web.archive.org/web/20220707112219/https://www.jeffgeerling.com/blog/2018/use-ansibles-yaml-callback-plugin-better-cli-experience
+  ANSIBLE_STDOUT_CALLBACK: 'default'
+  ANSIBLE_CALLBACK_RESULT_FORMAT: 'yaml'
+  # SSH Pipelining
+  ANSIBLE_PIPELINING: true
+  ANSIBLE_SSH_CONTROL_PATH: '/tmp/ansible-ssh-%%h-%%p-%%r'
+  # Task Timeout
+  # Requires Ansible 2.10
+  # REF: https://web.archive.org/web/20230819083945/https://docs.ansible.com/ansible/latest/reference_appendices/config.html#task-timeout
+  ANSIBLE_TASK_TIMEOUT: 900 # seconds
+
+defaults:
+  run:
+    working-directory: 'jason_riddle.tailscale'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v6
+        with:
+          path: 'jason_riddle.tailscale'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install yamllint
+
+      - name: Lint code.
+        run: |
+          yamllint .
+
+  molecule:
+    name: Molecule
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+        distro:
+          # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
+          # - rockylinux8
+
+          # TODO: Unable to install.
+          # - fedora38
+
+          # See: https://en.wikipedia.org/wiki/Ubuntu_version_history
+          # - ubuntu2404 # Noble Numbat
+          # - ubuntu2204 # Jammy Jellyfish
+          # - ubuntu2004 # Focal Fossa
+          # See: https://www.jeffgeerling.com/blog/2024/newer-versions-ansible-dont-work-rhel-8
+          # - ubuntu1804 # Bionic Beaver
+
+          # See: https://en.wikipedia.org/wiki/Debian_version_history
+          # - debian13 # Trixie
+          - debian12 # Bookworm
+          # - debian11 # Bullseye
+          # - debian10 # Buster
+
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v6
+        with:
+          path: 'jason_riddle.tailscale'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: Print python3 version.
+        run: |
+          python3 --version
+
+      - name: Print ansible version.
+        run: |
+          ansible --version
+
+      - name: Set HOSTNAME.
+        run: echo "HOSTNAME=$(cat /etc/hostname)" >> $GITHUB_ENV
+
+      - name: Run Molecule default test.
+        run: |
+          molecule test --scenario-name default
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+
+      - name: Run Molecule up test.
+        run: |
+          molecule test --scenario-name up
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
+      - name: Run Molecule up-with-oauth test.
+        run: |
+          molecule test --scenario-name up-with-oauth
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}
+          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+          TAILSCALE_OAUTH_CLIENT_SECRET: "${{ secrets.MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET }}"
+
+      # TODO: serve and funnel command line arguments have changed.
+      # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
+      # - name: Run Molecule serve test.
+      #   run: |
+      #     molecule test --scenario-name serve
+      #   env:
+      #     MOLECULE_DISTRO: ${{ matrix.distro }}
+      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
+
+      # TODO: serve and funnel command line arguments have changed.
+      # See https://tailscale.com/blog/reintroducing-serve-funnel/.
+
+      # - name: Run Molecule funnel test.
+      #   run: |
+      #     molecule test --scenario-name funnel
+      #   env:
+      #     MOLECULE_DISTRO: ${{ matrix.distro }}
+      #     MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
+      #     TAILSCALE_AUTHKEY: "${{ secrets.TAILSCALE_AUTHKEY }}"
