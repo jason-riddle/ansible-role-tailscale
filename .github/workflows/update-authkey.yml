@@ -36,7 +36,7 @@
 #
 # 3. Repository permissions:
 #    - Actions must have "Read and write permissions" under Settings > Actions > General
-#    - OR provide a PAT with 'repo' scope as PAT_TOKEN secret
+#    - OR provide a PAT with 'repo' scope as MANAGED_GITHUB_PAT_TOKEN secret
 #
 # 4. Update Tailscale ACL:
 #    Add to your ACL policy:
@@ -76,7 +76,7 @@
 #
 # "Failed to update secret"?
 # - Verify repository has "Read and write permissions" for Actions
-# - OR ensure PAT_TOKEN secret is set with 'repo' scope
+# - OR ensure MANAGED_GITHUB_PAT_TOKEN secret is set with 'repo' scope
 # - Check that gh CLI can authenticate
 #
 # References:
@@ -173,4 +173,4 @@ jobs:
           echo "${{ steps.generate_authkey.outputs.key }}" | gh secret set TAILSCALE_AUTHKEY
           echo "✅ TAILSCALE_AUTHKEY secret successfully updated!"
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN || github.token }}
+          GH_TOKEN: ${{ secrets.MANAGED_GITHUB_PAT_TOKEN || github.token }}
