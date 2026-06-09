@@ -9,7 +9,7 @@
   apt:
     name: gnupg
     state: present
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution_version is version('20.04', '>=')
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('20.04', '>=')
 
 # Ensure /etc/apt/keyrings exists. It is present by default on Debian 12+
 # and Ubuntu 22.04+, but older releases may not have it.
