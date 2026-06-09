@@ -22,10 +22,21 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.gpg"
+    tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.noarmor.gpg"
     tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 
 Apt repository options for Tailscale installation.
+
+> **Note (2026-06-09):** The key installation method was updated from the
+> deprecated `apt_key` module to `get_url` + `apt_repository` with `signed-by`
+> (see [issue #153](https://github.com/jason-riddle/ansible-role-tailscale/issues/153)).
+> `ansible.builtin.apt_key` was removed in ansible-core 2.17, which caused a
+> fatal error on Debian 13 (Trixie) and any other system running
+> ansible-core >= 2.17. The replacement approach uses only `get_url` and
+> `apt_repository`, both of which are available in all supported ansible-core
+> versions, so backwards compatibility is maintained. The key URL was also
+> changed from `.gpg` (ASCII-armored) to `.noarmor.gpg` (binary), which is
+> required by the `signed-by` apt option.
 
     __ts_yum_centos_repo_url: "https://pkgs.tailscale.com/stable/centos/{{ ansible_distribution_major_version }}/tailscale.repo"
     __ts_yum_fedora_repo_url: "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"

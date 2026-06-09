@@ -11,13 +11,34 @@
     state: present
   when: ansible_distribution == 'Ubuntu' or ansible_distribution_version is version('20.04', '>=')
 
-- name: Add tailscale apt key.
-  apt_key:
-    url: "{{ tailscale_apt_gpg_key }}"
-    state: present
+# Ensure /etc/apt/keyrings exists. It is present by default on Debian 12+
+# and Ubuntu 22.04+, but older releases may not have it.
+- name: Ensure /etc/apt/keyrings directory exists.
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
 
+# ansible.builtin.apt_key was deprecated in ansible-core 2.16 and removed in
+# ansible-core 2.17. Debian 13 (Trixie) and newer distros ship with
+# ansible-core >= 2.17, causing a fatal "couldn't resolve module" error.
+# Replaced with ansible.builtin.get_url, which has been available since
+# Ansible 2.0 and works on all supported ansible-core versions.
+- name: Download Tailscale apt signing key.
+  ansible.builtin.get_url:
+    url: "{{ tailscale_apt_gpg_key }}"
+    dest: /etc/apt/keyrings/tailscale.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+# Use the signed-by option so apt validates packages against the key stored
+# at /etc/apt/keyrings/tailscale.asc rather than relying on the global
+# apt trusted keyring (the old behaviour when apt_key was used).
 - name: Add tailscale apt repository.
-  apt_repository:
-    repo: "{{ tailscale_apt_repository }}"
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/tailscale.asc] {{ tailscale_apt_repository }}"
     state: present
     update_cache: true
