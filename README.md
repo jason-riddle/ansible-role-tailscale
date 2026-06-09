@@ -24,8 +24,14 @@ Available variables are listed below, along with default values (see `defaults/m
 
     tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.noarmor.gpg"
     tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
+    tailscale_apt_keyring_path: "/etc/apt/keyrings/tailscale.gpg"
 
 Apt repository options for Tailscale installation.
+
+`tailscale_apt_keyring_path` controls where the downloaded GPG key is saved.
+The default uses a `.gpg` extension because the key from `tailscale_apt_gpg_key`
+is in binary format — apt's `signed-by` requires `.gpg` for binary keys and
+`.asc` for ASCII-armored keys.
 
 > **Note (2026-06-09):** The key installation method was updated from the
 > deprecated `apt_key` module to `get_url` + `apt_repository` with `signed-by`

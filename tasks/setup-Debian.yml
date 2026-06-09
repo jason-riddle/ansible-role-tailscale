@@ -26,19 +26,30 @@
 # ansible-core >= 2.17, causing a fatal "couldn't resolve module" error.
 # Replaced with ansible.builtin.get_url, which has been available since
 # Ansible 2.0 and works on all supported ansible-core versions.
+#
+# The key file path is configurable via tailscale_apt_keyring_path.
+# The default uses a .gpg extension because the .noarmor.gpg URL serves a
+# binary GPG key. apt's signed-by requires the extension to match the content:
+#   - .gpg  -> binary (non-armored) key
+#   - .asc  -> ASCII-armored key
+# A mismatch (e.g. binary key saved as .asc) causes apt to reject it with
+# "NO_PUBKEY" even though the key content is identical.
 - name: Download Tailscale apt signing key.
   ansible.builtin.get_url:
     url: "{{ tailscale_apt_gpg_key }}"
-    dest: /etc/apt/keyrings/tailscale.asc
+    dest: "{{ tailscale_apt_keyring_path }}"
     owner: root
     group: root
     mode: "0644"
 
-# Use the signed-by option so apt validates packages against the key stored
-# at /etc/apt/keyrings/tailscale.asc rather than relying on the global
-# apt trusted keyring (the old behaviour when apt_key was used).
+# Use the signed-by option so apt validates packages against the key at
+# tailscale_apt_keyring_path rather than relying on the global apt trusted
+# keyring (the old behaviour when apt_key was used).
+#
+# tailscale_apt_repository already contains 'deb ', so we strip it with
+# regex_replace to avoid a double "deb" when prepending the signed-by option.
 - name: Add tailscale apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/tailscale.asc] {{ tailscale_apt_repository | regex_replace('^deb ', '') }}"
+    repo: "deb [signed-by={{ tailscale_apt_keyring_path }}] {{ tailscale_apt_repository | regex_replace('^deb ', '') }}"
     state: present
     update_cache: true
