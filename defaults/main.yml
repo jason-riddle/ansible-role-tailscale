@@ -12,6 +12,16 @@
 tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.noarmor.gpg"
 tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 
+# Path where the downloaded apt signing key is saved.
+# This must end in .gpg (binary key format) because the URL above
+# (tailscale_apt_gpg_key) serves a binary (non-armored) GPG key.
+# apt's signed-by option requires:
+#   - .gpg extension for binary keys
+#   - .asc extension for ASCII-armored keys
+# Mismatching the extension causes apt to reject the key with NO_PUBKEY.
+# Override this if you need a custom path or filename.
+tailscale_apt_keyring_path: /etc/apt/keyrings/tailscale.gpg
+
 # Used only for RedHat/CentOS/Fedora.
 __ts_yum_centos_repo_url: "https://pkgs.tailscale.com/stable/centos/{{ ansible_distribution_major_version }}/tailscale.repo"
 __ts_yum_fedora_repo_url: "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"

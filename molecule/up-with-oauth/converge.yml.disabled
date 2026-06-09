@@ -1,3 +1,8 @@
+# DISABLED (.disabled extension): The MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET repo
+# secret has never been created, so this scenario cannot pass in CI.
+# To re-enable: add a Tailscale OAuth client secret as a GitHub Actions secret
+# named MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET, then rename this file back to
+# converge.yml.
 ---
 - name: Converge
   hosts: all

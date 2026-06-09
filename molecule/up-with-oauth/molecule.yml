@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian10}-ansible:latest"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-debian12}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     # REF: https://www.jeffgeerling.com/blog/2022/docker-and-systemd-getting-rid-dreaded-failed-connect-bus-error
     volumes:
