@@ -1,6 +1,15 @@
 ---
 # Used only for Debian/Ubuntu.
-tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.gpg"
+#
+# Changed from .gpg to .noarmor.gpg (2026-06-09, see issue #153).
+# The .gpg URL served an ASCII-armored key, which is not accepted by the
+# signed-by option in modern apt. The .noarmor.gpg URL serves the same key
+# in binary (non-armored) format, which apt requires when the key is
+# referenced via signed-by in a sources.list entry.
+# apt_key (which handled the conversion internally) was removed in
+# ansible-core 2.17; the replacement get_url + signed-by approach needs the
+# binary format explicitly.
+tailscale_apt_gpg_key: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.noarmor.gpg"
 tailscale_apt_repository: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
 
 # Used only for RedHat/CentOS/Fedora.

@@ -13,6 +13,8 @@ galaxy_info:
       versions:
         - buster   # Debian 10
         - bullseye # Debian 11
+        - bookworm # Debian 12
+        - trixie   # Debian 13
     - name: Ubuntu
       versions:
         - bionic # Ubuntu 18.04
