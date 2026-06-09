@@ -80,7 +80,7 @@ jobs:
           # - ubuntu1804 # Bionic Beaver
 
           # See: https://en.wikipedia.org/wiki/Debian_version_history
-          # - debian13 # Trixie
+          - debian13 # Trixie
           - debian12 # Bookworm
           # - debian11 # Bullseye
           # - debian10 # Buster
