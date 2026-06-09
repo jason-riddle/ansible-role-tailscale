@@ -39,6 +39,6 @@
 # apt trusted keyring (the old behaviour when apt_key was used).
 - name: Add tailscale apt repository.
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/tailscale.asc] {{ tailscale_apt_repository }}"
+    repo: "deb [signed-by=/etc/apt/keyrings/tailscale.asc] {{ tailscale_apt_repository | regex_replace('^deb ', '') }}"
     state: present
     update_cache: true
