@@ -1,3 +1,8 @@
+# DISABLED (.disabled extension): The MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET repo
+# secret has never been created, so this scenario cannot pass in CI.
+# To re-enable: add a Tailscale OAuth client secret as a GitHub Actions secret
+# named MANAGED_TAILSCALE_OAUTH_CLIENT_SECRET, then rename this file back to
+# converge.yml.
 ---
 - name: Converge
   hosts: all
@@ -13,11 +18,7 @@
     # PERM: Keys > Auth Keys > Write
     # TAGS: tag:github-action
     tailscale_up_authkey: "{{ lookup('env', 'TAILSCALE_OAUTH_CLIENT_SECRET') }}?ephemeral=true&preauthorized=true"
-    tailscale_up_extra_args: >-
-      --accept-routes --advertise-tags=tag:github-actions
-      --hostname=gh-actions-ts-up-with-oauth-{{ lookup('env', 'HOSTNAME') }}
-      -{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}
-      -{{ ansible_architecture|replace('_', '-') }}
+    tailscale_up_extra_args: "--accept-routes --advertise-tags=tag:github-actions --hostname=gh-actions-ts-up-with-oauth-{{ lookup('env', 'HOSTNAME') }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version|lower }}-{{ ansible_architecture|replace('_', '-') }}"
 
   pre_tasks:
     - name: Assert that tailscale_up_authkey is not empty.
