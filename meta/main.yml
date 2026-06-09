@@ -7,7 +7,7 @@ galaxy_info:
   description: "Tailscale on Linux."
   issue_tracker_url: https://github.com/jason-riddle/ansible-role-tailscale/issues
   license: "MIT"
-  min_ansible_version: 2.4
+  min_ansible_version: 2.14
   platforms:
     - name: Debian
       versions:
