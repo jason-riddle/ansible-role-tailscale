@@ -1,6 +1,6 @@
 # Ansible Role for Tailscale
 
-[![CI](https://github.com/jason-riddle/ansible-role-tailscale/workflows/CI/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
+[![CI](https://github.com/jason-riddle/ansible-role-tailscale/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/jason-riddle/ansible-role-tailscale/actions?query=workflow%3ACI)
 
 [Tailscale](https://tailscale.com/) on Linux.
 
